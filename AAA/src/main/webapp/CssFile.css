@@ -1,0 +1,24 @@
+@charset "ISO-8859-1";
+h1{
+	font-weight : 500;
+	color:blue;
+	text-align:center;
+}
+p
+{
+	font-weight:200;
+	text-align:center;
+	
+}
+a href{
+	color:blue;
+	text-align:center;
+}
+table
+{
+	   border-collapse: collapse;
+
+}
+table td {
+    border: 1px solid #333;
+}

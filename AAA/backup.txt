@@ -1,0 +1,114 @@
+<form action="<%=request.getContextPath() %>/LibroServlet" method="post">
+<label for="LeggiL">Leggi Libro</label>
+<label for="id"></label>
+<input type="text" name="id" id="id"/>
+<input type="submit" value="leggi"/>
+</form>
+
+
+<%
+String id=null;
+id=(String)session.getAttribute("id");
+
+
+%>
+
+			stampa db in java
+<%
+/*
+try
+{
+Class.forName("com.mysql.cj.jdbc.Driver");
+String url="jdbc:mysql://localhost:3306/";
+String username="root";
+String password="root";
+String query="select titolo,editore,autore,categoria,prezzo,idProd from ispw.libro";
+Connection conn=DriverManager.getConnection(url, username, password);
+Statement stmt=conn.createStatement();
+ResultSet rs=stmt.executeQuery(query);
+while(rs.next())
+{
+	*/
+%>
+<!--  
+<tr><td> <%= rs.getString("titolo") %></td>
+<td> <%= rs.getString("editore") %></td>
+<td> <%= rs.getString("autore") %></td>
+<td> <%= rs.getString("categoria") %></td>
+<td> <%= rs.getFloat("prezzo") %></td>
+<td> <%= rs.getInt("idProd") %></td></tr>
+-->
+
+ <%
+
+//}
+%>
+<!--  </table>-->
+<%
+/*
+rs.close();
+stmt.close();
+conn.close();
+}
+catch(Exception e)
+{
+e.printStackTrace();
+}*/
+%>
+</form>
+
+
+<!--  
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
+-->
+
+<sql:setDataSource var = "snapshot" driver = "com.mysql.cj.jdbc.Driver" url = "jdbc:mysql://localhost:3306/"
+         user = "root"  password = "root"/>
+ 
+      <sql:query dataSource = "${snapshot}" var = "result">
+        select titolo,editore,autore,categoria,prezzo,idProd from ispw.libro;
+      </sql:query>
+ 
+      <table border = "1" >
+         <tr>
+            <th>Titolo</th>
+            <th>Editore</th>
+            <th>Autore</th>
+            <th>Categoria</th>
+             <th>Prezzo</th>
+              <th>idProd</th>
+         </tr>
+         
+         <c:forEach var = "row" items = "${result.rows}">
+            <tr>
+               <td><c:out value = "${row.titolo}"/></td>
+               <td><c:out value = "${row.editore}"/></td>
+               <td><c:out value = "${row.autore}"/></td>
+               <td><c:out value = "${row.categoria}"/></td>
+               <td><c:out value = "${row.prezzo}"/></td>
+               <td><c:out value = "${row.idProd}"/></td>
+               
+               
+            </tr>
+         </c:forEach>
+      </table>
+      
+      <tr>
+	<td><%=iterator.next().getTitolo()%></td>
+	<td><%=iterator.next().getNumeroPagine()%></td>
+	<td><%=iterator.next().getCodIsbn()%></td>
+	<td><%=iterator.next().getEditore()%></td>
+	<td><%=iterator.next().getAutore() %></td>
+	<td><%=iterator.next().getLingua()%></td>
+	<td><%=iterator.next().getCategoria() %></td>
+	<td><%=iterator.next().getDataPubb() %></td>
+	<td><%=iterator.next().getRecensione() %></td>
+	<td><%=iterator.next().getNrCopie() %></td>
+	<td><%=iterator.next().getDesc() %></td>
+	<td><%=iterator.next().getDisponibilita() %></td>
+	<td><%=iterator.next().getPrezzo() %></td>
+	<td><%=iterator.next().getNrCopie() %></td>
+	<td><%=iterator.next().getId() %></td>
+	</tr>
+ 
