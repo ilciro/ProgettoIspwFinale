@@ -1,37 +1,82 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <head>
-<meta charset="ISO-8859-1">
 <title>Benvenuti nella Libreria online</title>
+<meta charset="ISO-8859-1">
+
 <link href="CssFile.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <h1>  Benvenuti nella Libreria </h1>
-<p>
 
-<form action="LibroServlet" method="post">
-<div>
-<p>
+
+<form action="LibroServlet" method="post" >
+
+<table>
+<caption > TABELLA LIBRI</caption>
+<tr>
+<th scope="col"></th>
+
+</tr>
+<tr>
+<td>
 <label for="idL"></label>
 <button type="submit" name="buttonI" value="buttonI">Elenco Libro totale</button>
 <input type="text" name="idL" id="idL"/>
-</p>
-<img alt="img/libro.png_860.png" src=" source not found" width=300  height=300 >
-</div>
+</td>
+</tr>
+<tr>
+<td><img alt="source not found" src="immagini/libro.png_860.png" width=100  height=100 ></td>
+</tr>
+</table>
+
 </form>
 
 
-<p>
-<a href="giornali.jsp" >Elenco Giornali</a>
-</p>
-<p>
-<a href="riviste.jsp" >Elenco Riviste</a>
-</p>
-<p>
-<a href="cerca.jsp" >Cerca</a>
-</p>
-<p>
-<a href="login.jsp" >Login</a>
-</p>
+
+<form action="GiornaleServlet" method="post" >
+<table>
+<caption > TABELLA GIORNALI</caption>
+<tr>
+<th scope="col"></th>
+</tr>
+<tr>
+<td>
+<label for="idG"></label>
+<button type="submit" name="buttonI" value="buttonI">Elenco Giornale totale</button>
+<input type="text" name="idG" id="idG"/>
+</td>
+</tr>
+<tr>
+<td><img alt="source not found" src="immagini/newspaper-284-542534.png" width=100  height=100 ></td>
+</tr>
+</table>
+</form>
+
+<form action="GiornaleServlet" method="post" >
+<table>
+<caption > TABELLA RIVISTA</caption>
+<tr>
+<th scope="col"></th>
+</tr>
+<tr>
+<td>
+<label for="idR"></label>
+<button type="submit" name="buttonI" value="buttonI">Elenco Riviste totale</button>
+<input type="text" name="idR" id="idR"/>
+</td>
+</tr>
+<tr>
+<td><img alt="source not found" src="immagini/una-rivista_318-1607.jpg" width=100  height=100 ></td>
+</tr>
+</table>
+</form>
+
+
+<h2>
+0 per lista completa, numero per singolo oggetto
+</h2>
+
+
 </body>
 </html>
