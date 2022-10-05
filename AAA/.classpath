@@ -9,7 +9,6 @@
 	<classpathentry kind="lib" path="externalLibray/itextpdf/itextpdf/5.5.9/itextpdf-5.5.9.jar"/>
 	<classpathentry kind="lib" path="externalLibray/mybatis/mybatis/3.4.5/mybatis-3.4.5.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaFX11"/>
-	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 9.0/lib/servlet-api.jar">
 		<attributes>

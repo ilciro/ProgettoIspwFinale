@@ -4,17 +4,14 @@ h1{
 	color:blue;
 	text-align:center;
 }
+
 h2{
-	font-weight : 500;
-	color:#ff0000;
-	text-align:center;
-}
-p
-{
-	font-weight:200;
+	color:green;
+	font-weight:1000;
 	text-align:center;
 	
 }
+
 a href{
 	color:blue;
 	text-align:center;
@@ -22,11 +19,20 @@ a href{
 table
 {
 	   border-collapse: collapse;
+	   border-spacing: 8px 2px;
+	   margin-left: auto; 
+	   margin-right: auto;
+	   table-layout:auto;
 	  
 
 }
-table td {
-    border: 1px solid #333;
+ td {
+    border: 2px solid cyan;
+    padding : 6px;
+}
+
+caption{
+	color:violet;
 }
 
 

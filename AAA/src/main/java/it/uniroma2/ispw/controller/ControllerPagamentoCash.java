@@ -47,12 +47,14 @@ public class ControllerPagamentoCash {
 			pD.inserisciFattura(f);
 			
 			Pagamento p;
-			p=new Pagamento(0,"cartaCredito", 0, "utGene",0, null);
+			
+			p=new Pagamento(0,"", 0, "utGene",0, null);
 				
 			//inserire qui
 			p.setMetodo("cash");
 			p.setNomeUtente(nome);
 			String tipo=vis.getType();
+			p.setId(vis.getId());
 			if(tipo.equals("libro"))
 			{
 				//prenod spesa da vis

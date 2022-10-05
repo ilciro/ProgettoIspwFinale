@@ -147,6 +147,10 @@ public class LibroBean {
 		this.url = url;
 	}
 	
+	public LibroBean()
+	{
+		
+	}
 	
 
 }

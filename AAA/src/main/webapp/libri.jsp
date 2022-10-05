@@ -1,35 +1,18 @@
 
-<%@ page import="bean.LibroBean" %>
-<%@ page import="java.util.*" %>
-<%@ page import="it.uniroma2.ispw.model.raccolta.Libro" %>
-<%@ page import="it.uniroma2.ispw.database.LibroDao" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 
-
-   
-
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" 
-pageEncoding="ISO-8859-1" %>
-
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <!DOCTYPE html>
-
 <html lang=en>
 <head>
-<!-- Copyright 2013 SonarSource SA -->
 <link rel="stylesheet" href="CssFile.css">
-
 <meta charset="ISO-8859-1">
 <title>Pagina libri</title>
-<link rel="" />
 </head>
 <body>
 
 
-<!--  
-<jsp:useBean id="LibroBean" class="bean.LibroBean" />
-<jsp:getProperty name="LibroBean" property="miaLista" />
-
--->
 
 
 
@@ -37,75 +20,111 @@ pageEncoding="ISO-8859-1" %>
 <table>
 <caption>Riepilogo libro</caption>
 <tr>
-<th>Titolo</th>
-<th>Numero pagine</th>
-<th>Codice Isbn</th>
-<th>Editore</th>
-<th>Autore</th>
-<th>Lingua</th>
-<th>Categoria</th>
-<th>DataPubblicazione</th>
-<th>Recensione</th>
-<th>CopieVendute</th>
-<th>Descrizione</th>
-<th>Disponibilita</th>
-<th>Prezzo</th>
-<th>Copie Rimanenti</th>
-<th>idProdotto</th>
+<th>
+titolo
+</th>
+<th>
+numPagine
+</th>
+<th>
+codice isbn
+</th>
+<th>
+editore
+</th>
+<th>
+autore
+</th>
+<th>
+lingua
+</th>
+<th>
+categoria
+</th>
+<th>
+data pubblicazione
+</th>
+<th>
+recensione
+</th>
+<th>
+numero copie
+</th>
+<th>
+descrizione
+</th>
+<th>
+disponibilità
+</th>
+<th>
+prezzo
+</th>
+<th>
+copie
+</th>
+<th>
+id prodotto
+</th>
 </tr>
-<%
-LibroBean lB=new LibroBean();
-LibroDao lD=new LibroDao();
-System.out.println("dsadx in libri.jsp:"+request.getParameter("idL"));//stampa nr digitato
-lB.setMiaLista(lD.getLibriSingoloList());
 
-List<Libro> l=new ArrayList<Libro>();
-l.addAll(lB.getMiaLista());
-Iterator<Libro> it=null;
 
-it=l.iterator();
-int i=0;
-while (it.hasNext() && i<l.size()) {
-%>
+
+<c:forEach items="#{bean.miaLista}" var="lista">
+
 <tr>
-<td><%=l.get(i).getTitolo()%></td>
-<td><%=l.get(i).getNumeroPagine()%></td>
-<td><%=l.get(i).getCodIsbn()%></td>
-<td><%=l.get(i).getEditore()%></td>
-<td><%=l.get(i).getAutore() %></td>
-<td><%=l.get(i).getLingua()%></td>
-<td><%=l.get(i).getCategoria() %></td>
-<td><%=l.get(i).getDataPubb() %></td>
-<td><%=l.get(i).getRecensione() %></td>
-<td><%=l.get(i).getNrCopie() %></td>
-<td><%=l.get(i).getDesc() %></td>
-<td><%=l.get(i).getDisponibilita() %></td>
-<td><%=l.get(i).getPrezzo() %></td>
-<td><%=l.get(i).getNrCopie() %></td>
-<td><%=l.get(i).getId() %></td>
-</tr>
 
-<%	
-i++;
-}
-%>
+
+<td>${ lista.getTitolo() }</td>
+<td>${ lista.getNumeroPagine() }</td>
+<td>${ lista.getCodIsbn() }</td>
+<td>${ lista.getEditore() }</td>
+<td>${ lista.getAutore() }</td>
+<td>${ lista.getLingua() }</td>
+<td>${ lista.getCategoria()}</td>
+<td>${ lista.getDataPubb()}</td>
+<td>${ lista.getRecensione() }</td>
+<td>${ lista.getNrCopie() }</td>
+<td>${ lista.getDesc() }</td>
+<td>${ lista.getDisponibilita() }</td>
+<td>${ lista.getPrezzo() }</td>
+<td>${ lista.getNrCopie() }</td>
+<td>${ lista.getId()}</td>
+
+</tr>
+</c:forEach>
 
 </table>
 <form action="AcquistaServlet" method="post">
-<div>
-<p>
-<label for="mostraL">Acquista Libro n</label>
+<br>
 <label for="idL" ></label>
-<input type=text name="idL" id="idL">
-<button type="submit" name="buttonI" value="buttonI">Invia</button>
-</p>
-</div>
+<button type="submit" name="buttonI" value="buttonI">Inserire nr oggetto scelto</button>
+<input type="text" name="idL" id="idL">
+
 </form>
 
+<br>
+<br>
 
-<p>
-<a href="index.html" >indietro</a>
-</p>
+<table>
+<caption>
+</caption>
+<tr>
+<th scope="col"></th>
+</tr>
+<tr>
+<td>
+<a href="index.html">
+<button>
+annulla
+</button>
+</a>
+</td>
+</tr>
+
+
+</table>
+
+
 
 </body>
 </html>

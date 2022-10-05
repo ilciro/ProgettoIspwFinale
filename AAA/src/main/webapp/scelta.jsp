@@ -1,0 +1,103 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %><!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset="ISO-8859-1">
+<title>Benvenuti nella schermata di scelta del pagamento</title>
+<link rel="stylesheet" href="CssFile.css">
+</head>
+<body>
+<h1> Riepilogo Transazione ... </h1>
+
+<h2> Scegliere come pagare</h2>
+
+
+<table>
+<caption>Riepilogo pagamento</caption>
+
+<tr>
+<th scope="col">
+importo 
+</th>
+<th scope="col">
+ euro
+</th>
+<tr>
+
+<td>
+<label for="pagL">
+importo
+</label>
+</td>
+<td> 
+<label for="totL">
+${bean.getSpesaT() }
+</label>
+</td>
+</tr>
+</table>
+
+
+<br>
+
+<form action="ContantiServlet" method="get">
+<table>
+<caption>Pagamento cash</caption>
+<tr>
+<th scope="col"></th>
+<tr>
+
+<td>
+<input type="submit" name="buttonCash" value="scegli">
+</td>
+<td>
+<img alt="source not found" src="immagini/kisspng-euro-banknotes-money.jpg" width=100  height=100 >
+</td>
+
+</tr>
+</table>
+</form>
+
+<br>
+
+<form action="CCServlet" method="get">
+<table>
+<caption>Pagamento cc</caption>
+<tr>
+<th scope="col"></th>
+<tr>
+
+<td>
+<input type="submit" name="buttonCC" value="scegli">
+</td>
+<td>
+<img alt="source not found" src="immagini/c1143dcff9ad70b625b1b4b32bbc7a4e.jpg" width=100  height=100 >
+</td>
+</tr>
+</table>
+</form>
+
+<br>
+<table>
+<caption>
+</caption>
+<tr>
+<th scope="col"></th>
+</tr>
+<tr>
+<td>
+<a href="index.html">
+<button>
+indietro
+</button>
+</a>
+
+</table>
+
+
+
+</body>
+</html>
