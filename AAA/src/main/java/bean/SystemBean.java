@@ -69,6 +69,12 @@ public class SystemBean {
 	public void setElemLista(int elemLista) {
 		this.elemLista = elemLista;
 	}
+	public int getElemListaPag() {
+		return elemListaPag;
+	}
+	public void setElemListaPag(int elemListaPag) {
+		this.elemListaPag = elemListaPag;
+	}
 	private boolean isLogged ;
 	 private boolean isSearch;
 	 private boolean isPickup;
@@ -77,5 +83,6 @@ public class SystemBean {
 	 private int quantita; //usato per avere quantita oggetto che compro
 	 private String metodoP; //usato per vedere se contanti o cc
 	 private int elemLista;
+	 private int elemListaPag;
 
 }

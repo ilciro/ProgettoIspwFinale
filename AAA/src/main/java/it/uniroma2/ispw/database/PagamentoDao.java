@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import it.uniroma2.ispw.model.Pagamento;
 import it.uniroma2.ispw.model.User;
@@ -77,16 +79,10 @@ private ResultSet rs=null;
 	}
 	public ObservableList<Pagamento> getPagamenti() throws SQLException  {
 
-					ObservableList<Pagamento> catalogo=FXCollections.observableArrayList();
-
-
-		
+			ObservableList<Pagamento> catalogo=FXCollections.observableArrayList();
 			conn= ConnToDb.generalConnection();
-		
-
 			 st=conn.createStatement();
 			 rs = st.executeQuery("SELECT id_op,metodo,esito,nomeUtente,spesaTotale,tipoAcquisto,idProd from ispw.pagamento where eMail='"+User.getInstance().getEmail()+"'");
-			
 			
 			while(rs.next())
 			{
@@ -98,6 +94,24 @@ private ResultSet rs=null;
 		conn.close();
 		return catalogo;
 	}
+	
+	public List<Pagamento> getPagamentiList() throws SQLException  {
+
+		List<Pagamento> catalogo=new ArrayList<>();
+		conn= ConnToDb.generalConnection();
+		 st=conn.createStatement();
+		 rs = st.executeQuery("SELECT id_op,metodo,esito,nomeUtente,spesaTotale,tipoAcquisto,idProd from ispw.pagamento where nomeUtente='"+User.getInstance().getNome()+"'");
+		
+		while(rs.next())
+		{
+
+
+			catalogo.add(new Pagamento (rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getString(4),rs.getFloat(5),rs.getString(6)));
+
+		}
+	conn.close();
+	return catalogo;
+}
 
 	
 		

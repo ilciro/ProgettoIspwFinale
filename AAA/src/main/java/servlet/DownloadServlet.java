@@ -21,6 +21,7 @@ import it.uniroma2.ispw.model.raccolta.Libro;
 public class DownloadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Libro l=new Libro();
+
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -38,9 +39,8 @@ public class DownloadServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Id del libro nella down servlet: "+ SystemBean.getIstance().getId());
 		
-		l.setId(SystemBean.getIstance().getId());
+		
 		try {
 			l.scarica();
 		
@@ -49,7 +49,8 @@ public class DownloadServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		request.setAttribute("bean1",SystemBean.getIstance());
+		request.setAttribute("bean","lB");
 		RequestDispatcher view = getServletContext().getRequestDispatcher("/index.html"); 
 		view.forward(request,response); 
 	}

@@ -6,7 +6,7 @@
 
 
 <!DOCTYPE html>
-<html>
+<html lang="en-it">
 <head>
 <meta charset="ISO-8859-1">
 <title>Riepilogo Libro</title>

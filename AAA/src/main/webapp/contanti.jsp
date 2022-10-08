@@ -55,7 +55,9 @@ comunicazioni
 <tr>
 <td></td>
 <td>
-<button type="submit" name="buttonProc" value="buttonProc">procedi</button>
+<button type="submit" name="buttonProc" value="buttonProc">
+procedi
+</button>
 </td>
 </tr>
 </table>

@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html lang=en>
 <head>
-<link rel="stylesheet" href="CssFile.css">
+<link rel="stylesheet" href="css//CssFile.css">
 
 
 
@@ -39,10 +39,10 @@ Disponibilita
 
 <c:choose>
 <c:when test="${bean.getDisponibilita()==1 }">
-<link rel="stylesheet" href="tableRight.css">
+<link rel="stylesheet" href="css//tableRight.css">
 </c:when>
 <c:when test="${bean.getDisponibilita()==-1 }">
-<link rel="stylesheet" href="tableError.css">
+<link rel="stylesheet" href="css//tableError.css">
 </c:when>
 </c:choose>
 

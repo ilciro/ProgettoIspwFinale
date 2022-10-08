@@ -47,9 +47,9 @@ public class SceltaServlet extends HttpServlet {
 			
 			if(Integer.parseInt(quantita)<1)
 			{
-				bE.setE(new NumberFormatException(" quantita minore di 0"));
+				bE.setE(new NumberFormatException(" quantita minore di 1"));
 				request.setAttribute("bean1", bE);
-				RequestDispatcher view = getServletContext().getRequestDispatcher("/errore.jsp"); 
+				RequestDispatcher view = getServletContext().getRequestDispatcher("/libri.jsp"); 
 				view.forward(request,response); 
 			}
 			else {
@@ -67,7 +67,9 @@ public class SceltaServlet extends HttpServlet {
 			view.forward(request,response); 
 			}
 			}catch(NumberFormatException |SQLException e) {
-				e.printStackTrace();
+				bE.setE(new NumberFormatException(" quantità non valida"));
+				RequestDispatcher view = getServletContext().getRequestDispatcher("/errore.jsp"); 
+				view.forward(request,response); 
 			}
 			
 		 		

@@ -1,5 +1,9 @@
 package bean;
 
+import java.util.List;
+
+import it.uniroma2.ispw.model.Pagamento;
+
 public class PagamentoBean {
 	private int id;
 	public int getId() {
@@ -70,9 +74,18 @@ public class PagamentoBean {
 	this.ammontare = ammontare;
 	this.tipo = tipo;
 	this.idOggetto=idOggetto;
+	
 }
 	public PagamentoBean() {
 		
+	}
+	private List<Pagamento> pagamentiList;
+
+	public List <Pagamento> getPagamentiList() {
+		return pagamentiList;
+	}
+	public void setPagamentiList(List <Pagamento> pagamentiList) {
+		this.pagamentiList = pagamentiList;
 	}
 
 }

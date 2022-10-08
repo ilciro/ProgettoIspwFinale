@@ -45,13 +45,22 @@ public class LibroServlet extends HttpServlet {
 	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String id=request.getParameter("idL");
-		
-		lB.setId(id);
 		
 		
 
+		
+		String id=request.getParameter("idL");
+		lB.setId(id);
+		
+		
 		try {
+			
+		
+
+		 
+			
+		
+		
 		//controllo id 
 		if(Integer.parseInt(id)==0)
 		{
@@ -99,6 +108,9 @@ public class LibroServlet extends HttpServlet {
 			}
 				
 		}
+		
+		
+		
 		else {
 			bE.setE(new NumberFormatException("numero minore di 0 "));
 			request.setAttribute("bean1",bE);
@@ -106,7 +118,7 @@ public class LibroServlet extends HttpServlet {
 			view.forward(request,response); 
 		}
 	
-			
+		
 			
 		
 		

@@ -24,6 +24,14 @@ sig. ${bean.getNome()} hai effetuato il pagamento
 </td>
 <td>
 di euro ${bean1.getSpesaT()}
+<td>
+</tr>
+<tr>
+<td>
+titolo libro:
+</td>
+<td>
+${bean2.getTitolo() }
 </td>
 </tr>
 </table>
@@ -48,7 +56,7 @@ di euro ${bean1.getSpesaT()}
 
 <br>
 <br>
-<form action="AnnullaServlet" method="post">
+
 <table>
 <caption>
 </caption>
@@ -57,11 +65,15 @@ di euro ${bean1.getSpesaT()}
 </tr>
 <tr>
 <td>
-<input type="submit" id="annullaD" value="annulla">
+<a href="annullaOrdine.jsp">
+<button >
+annulla ordine
+</button>
+</a>
 </td>
 </tr>
 </table>
-</form>
+
 
 </body>
 </html>

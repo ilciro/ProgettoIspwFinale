@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang=en-it>
 <head>
-<link rel="stylesheet" href="paginaErrore.css">
+<link rel="stylesheet" href="css//paginaErrore.css">
 
 <meta charset="ISO-8859-1">
 <title></title>

@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html lang=en>
 <head>
-<link rel="stylesheet" href="CssFile.css">
+<link rel="stylesheet" href="css//CssFile.css">
 <meta charset="ISO-8859-1">
 <title>Pagina libri</title>
 </head>
@@ -104,7 +104,7 @@ id prodotto
 
 <br>
 <br>
-
+<form action="AcquistaServlet" method="post">
 <table>
 <caption>
 </caption>
@@ -113,18 +113,36 @@ id prodotto
 </tr>
 <tr>
 <td>
+<button type="submit" name="buttonG" value="buttonG">
+genera lista
+</button>
+</td>
+</tr>
+</table>
+</form>
+
+<br>
+<br>
+<table>
+<caption>
+</caption>
+<tr>
+<th scope="col"></th>
+</tr>
+<tr>
+
+<tr>
+<td>
 <a href="index.html">
-<button>
-annulla
+<button type="submit" id="buttonI">
+home page
 </button>
 </a>
+
 </td>
 </tr>
 
-
 </table>
-
-
 
 </body>
 </html>

@@ -7,12 +7,14 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Benvenuti nella schermata di scelta del pagamento</title>
-<link rel="stylesheet" href="CssFile.css">
+<link rel="stylesheet" href="css//CssFile.css">
 </head>
 <body>
 <h1> Riepilogo Transazione ... </h1>
 
 <h2> Scegliere come pagare</h2>
+
+<h3> Flaggare "negozio" per ritirare in negozio </h3>
 
 
 <table>
@@ -49,14 +51,22 @@ ${bean.getSpesaT() }
 <tr>
 <th scope="col"></th>
 <tr>
-
 <td>
 <input type="submit" name="buttonCash" value="scegli">
 </td>
 <td>
 <img alt="source not found" src="immagini/kisspng-euro-banknotes-money.jpg" width=100  height=100 >
 </td>
-
+</tr>
+<tr>
+<td>
+<label for="negozioC"></label>
+<input type="checkbox" id="negozioC">
+ritiro in negozio
+</td>
+<td>
+<img alt="source not found" src="immagini/lovepik-shop-png-image_400246866_wh1200.png" width=100  height=100 >
+</td>
 </tr>
 </table>
 </form>
@@ -75,6 +85,16 @@ ${bean.getSpesaT() }
 </td>
 <td>
 <img alt="source not found" src="immagini/c1143dcff9ad70b625b1b4b32bbc7a4e.jpg" width=100  height=100 >
+</td>
+</tr>
+<tr>
+<td>
+<label for="negozioC1"></label>
+<input type="checkbox" id="negozioC1">
+ritiro in negozio
+</td>
+<td>
+<img alt="source not found" src="immagini/lovepik-shop-png-image_400246866_wh1200.png" width=100  height=100 >
 </td>
 </tr>
 </table>

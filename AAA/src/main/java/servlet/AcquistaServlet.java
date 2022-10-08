@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bean.ExceptionBean;
-//import bean.AcquistaBean;
 import bean.LibroBean;
 import bean.SystemBean;
 import it.uniroma2.ispw.database.LibroDao;
@@ -50,6 +49,28 @@ public class AcquistaServlet extends HttpServlet {
 		
 		try {
 			String id=request.getParameter("idL");
+			if(id==null)
+			{
+				 System.out.println("aaa");
+				 
+				 id="0";
+					
+				lB.setMiaLista(lD.getLibriSingoloList());
+					
+						
+				SystemBean.getIstance().setType("libro");
+				SystemBean.getIstance().setElemLista(lB.getMiaLista().size());
+				request.setAttribute("bean1",SystemBean.getIstance());
+		       request.setAttribute("bean",lB); 
+		        
+
+
+					RequestDispatcher view = getServletContext().getRequestDispatcher("/libri.jsp"); 
+					view.forward(request,response); 
+			
+			}
+			else {
+				
 			lB.setId(id);		
 
 			
@@ -61,7 +82,7 @@ public class AcquistaServlet extends HttpServlet {
 			System.out.println("id :" +lB.getId());
 		//controllo id 
 			
-		if(Integer.parseInt(id)>=1 && Integer.parseInt(id)<SystemBean.getIstance().getElemLista()){
+			if(Integer.parseInt(id)>=1 && Integer.parseInt(id)<SystemBean.getIstance().getElemLista()){
 			
 			nome=lD.getNome(lib);
 			costo=lD.getCosto(lib);
@@ -87,14 +108,26 @@ public class AcquistaServlet extends HttpServlet {
 				view.forward(request,response); 
 				
 		}
-		else {
+		 
+		else if(Integer.parseInt(id)>=1 && Integer.parseInt(id)>SystemBean.getIstance().getElemLista()) {
 			bE.setE(new NumberFormatException("elemento non in lista"));
 			 request.setAttribute("bean1",bE);
-			RequestDispatcher view = getServletContext().getRequestDispatcher("/errore.jsp"); 
+			RequestDispatcher view = getServletContext().getRequestDispatcher("/libri.jsp"); 
+			view.forward(request,response); 
+			
+		}
+		else if(Integer.parseInt(id)<=0){
+			bE.setE(new NumberFormatException("elemento nullo"));
+			 request.setAttribute("bean1",bE);
+			RequestDispatcher view = getServletContext().getRequestDispatcher("/libri.jsp"); 
 			view.forward(request,response); 
 			
 		}
 		
+		
+		}
+		
+	
 		} catch (ServletException| NumberFormatException |SQLException e) {
 			bE.setE(e);
 			 request.setAttribute("bean1",bE);

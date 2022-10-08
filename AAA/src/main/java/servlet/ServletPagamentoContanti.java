@@ -12,13 +12,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import bean.ExceptionBean;
 import bean.FatturaBean;
+import bean.LibroBean;
 import bean.PagamentoBean;
 import bean.SystemBean;
 import bean.UserBean;
 import it.uniroma2.ispw.database.ContrassegnoDao;
+import it.uniroma2.ispw.database.LibroDao;
 import it.uniroma2.ispw.database.PagamentoDao;
 import it.uniroma2.ispw.model.Fattura;
 import it.uniroma2.ispw.model.Pagamento;
+import it.uniroma2.ispw.model.raccolta.Libro;
 
 /**
  * Servlet implementation class ServletPagamentoContanti
@@ -33,6 +36,9 @@ public class ServletPagamentoContanti extends HttpServlet {
 	private ContrassegnoDao fD=new ContrassegnoDao();
 	private Pagamento p;
 	private Fattura f;
+	private LibroBean lB=new LibroBean();
+	private LibroDao lD=new LibroDao();
+	private Libro l=new Libro();
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -66,6 +72,13 @@ public class ServletPagamentoContanti extends HttpServlet {
 		}
 		else {
 			//faccio pagamento
+			l.setId(SystemBean.getIstance().getId());
+			try {
+				lB.setTitolo(lD.getTitolo(l));
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			pB.setId(0);
 			pB.setMetodo("cash");
 			pB.setEsito(0);
@@ -93,6 +106,7 @@ public class ServletPagamentoContanti extends HttpServlet {
 			}
 			request.setAttribute("bean",UserBean.getInstance());
 			request.setAttribute("bean1", SystemBean.getIstance());
+			request.setAttribute("bean2", lB);
 			RequestDispatcher view = getServletContext().getRequestDispatcher("/esitoPositivo.jsp"); 
 			view.forward(request,response); 
 			
