@@ -3,7 +3,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Info per pagamento in contanti</title>
-<link href="contanti.css" rel="stylesheet" type="text/css">
+<link href="css//contanti.css" rel="stylesheet" type="text/css">
 
 </head>
 <body>

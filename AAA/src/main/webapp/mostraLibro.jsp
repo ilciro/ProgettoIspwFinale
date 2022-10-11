@@ -10,7 +10,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Riepilogo Libro</title>
-<link href="CssFile.css" rel="stylesheet" type="text/css">
+<link href="css//CssFile.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <h1>Ecco il riepilogo del libro scelto</h1>

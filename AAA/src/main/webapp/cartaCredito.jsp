@@ -3,13 +3,13 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Credenziali carta di credito</title>
-<link href="cartaCredito.css" rel="stylesheet" type="text/css">
+<link href="css//cartaCredito.css" rel="stylesheet" type="text/css">
 
 </head>
 <body>
 
 <h1>Inserire credenziali di carta credito</h1>
-<form action="" method="get">
+<form action="ServletPagamentoCC" method="post">
 <table>
 <caption></caption>
 <tr>
@@ -21,7 +21,7 @@ nome
 </td>
 <td>
 <label for="nomeU"></label>
-<input type="text" id="nomeU">
+<input type="text" id="nomeU" name="nomeU">
 </td>
 </tr>
 <tr>
@@ -30,7 +30,7 @@ cognome
 </td>
 <td>
 <label for="cognomeU"></label>
-<input type="text" id="cognomeU">
+<input type="text" id="cognomeU" name="cognomeU">
 </td>
 </tr>
 <tr>
@@ -39,10 +39,7 @@ codice (xxxx-xxxx-xxxx-xxxx)
 </td>
 <td>
 <label for="codiceU"></label>
-<input type="text" id="codiceU">
-</td>
-<td>
-<input type="submit" name="paga" value="procedi">
+<input type="text" id="codiceU" name="codiceU">
 </td>
 </tr>
 <tr>
@@ -51,7 +48,7 @@ scadenza (yyyy-mm-dd)
 </td>
 <td>
 <label for="scadU"></label>
-<input type="text" id="scadU">
+<input type="text" id="scadU" name="scadU">
 </td>
 </tr>
 <tr>
@@ -60,18 +57,26 @@ pin (xyz)
 </td>
 <td>
 <label for="pinU"></label>
-<input type="text" id="pinU">
+<input type="password" id="pinU" name="pinU">
+</td>
+<tr>
+<td>
+<input type="submit" name="paga" value="procedi">
 </td>
 </tr>
+
 </table>
 </form>
 
 
 <br>
+
+
+<h1> Elenco carte possedute </h1>
 <br>
-<h2> Elenco carte possedute</h2>
+
 <table>
-<caption> elenco carte :</caption>
+<caption> </caption>
 <tr>
 <th scope="col">
 codice carta
@@ -96,19 +101,7 @@ nome utente
 </td>
 </table>
 
-<br>
-<br>
-<table>
-<caption></caption>
-<tr>
-<th scope="col"></th>
-</tr>
-<tr>
-<td>
-<input type="submit" name="pagaB" value="conferma">
-</td>
-</tr>
-</table>
+
 
 <br>
 <br>

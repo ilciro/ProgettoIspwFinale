@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.itextpdf.text.DocumentException;
 
+import bean.LibroBean;
 import bean.SystemBean;
-import it.uniroma2.ispw.model.raccolta.Libro;
 
 /**
  * Servlet implementation class DownloadServlet
@@ -20,7 +20,7 @@ import it.uniroma2.ispw.model.raccolta.Libro;
 @WebServlet("/DownloadServlet")
 public class DownloadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private Libro l=new Libro();
+	private LibroBean lB=new LibroBean();
 
        
     /**
@@ -40,11 +40,17 @@ public class DownloadServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		
+		if(SystemBean.getIstance().isNegScelto()==true)
+		{
+			RequestDispatcher view = getServletContext().getRequestDispatcher("/negozio.jsp"); 
+			view.forward(request,response); 
+		}
+		else {
+		//mettere if su tipo ogetto
 		try {
-			l.scarica();
+			lB.scarica();
 		
-			l.leggi(l.getId());
+			lB.leggi(SystemBean.getIstance().getId());
 		} catch (DocumentException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -53,6 +59,7 @@ public class DownloadServlet extends HttpServlet {
 		request.setAttribute("bean","lB");
 		RequestDispatcher view = getServletContext().getRequestDispatcher("/index.html"); 
 		view.forward(request,response); 
+		}
 	}
 
 }

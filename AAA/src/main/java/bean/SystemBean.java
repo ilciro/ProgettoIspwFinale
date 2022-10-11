@@ -75,6 +75,12 @@ public class SystemBean {
 	public void setElemListaPag(int elemListaPag) {
 		this.elemListaPag = elemListaPag;
 	}
+	public boolean isNegScelto() {
+		return negScelto;
+	}
+	public void setNegScelto(boolean negScelto) {
+		this.negScelto = negScelto;
+	}
 	private boolean isLogged ;
 	 private boolean isSearch;
 	 private boolean isPickup;
@@ -84,5 +90,6 @@ public class SystemBean {
 	 private String metodoP; //usato per vedere se contanti o cc
 	 private int elemLista;
 	 private int elemListaPag;
+	 private boolean negScelto;
 
 }

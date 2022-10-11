@@ -41,6 +41,8 @@ public class CancellaPagamentoServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		System.out.println(" tipo pagamento :"+ SystemBean.getIstance().getMetodoP());
+		
 		String id=request.getParameter("idCanc");
 		if(Integer.parseInt(id)<0)
 		{
@@ -59,21 +61,41 @@ public class CancellaPagamentoServlet extends HttpServlet {
 		else
 		{
 			boolean delF,delP;
-			try {
-				delF=fD.annullaOrdine(Integer.parseInt(id));
-				delP=pD.annullaOrdine(Integer.parseInt(id));
-				if(delF && delP)
-				{
-					l.setId(SystemBean.getIstance().getId());
-					lD.aggiornaDisponibilita(l);
-					
-					request.setAttribute("bean", SystemBean.getIstance());
-					RequestDispatcher view = getServletContext().getRequestDispatcher("/index.html"); 
-					view.forward(request,response);
+			if(SystemBean.getIstance().getMetodoP().equals("cash"))
+			{
+				try {
+					delF=fD.annullaOrdine(Integer.parseInt(id));
+					delP=pD.annullaOrdine(Integer.parseInt(id));
+					if(delF && delP)
+					{
+						l.setId(SystemBean.getIstance().getId());
+						lD.aggiornaDisponibilita(l);
+						
+						request.setAttribute("bean", SystemBean.getIstance());
+						RequestDispatcher view = getServletContext().getRequestDispatcher("/index.html"); 
+						view.forward(request,response);
+					}
+				} catch (NumberFormatException | SQLException e) {
+					e.printStackTrace();
 				}
-			} catch (NumberFormatException | SQLException e) {
-				e.printStackTrace();
 			}
+			else {
+				try {
+					delP=pD.annullaOrdine(Integer.parseInt(id));
+					if( delP)
+					{
+						l.setId(SystemBean.getIstance().getId());
+						lD.aggiornaDisponibilita(l);
+						
+						request.setAttribute("bean", SystemBean.getIstance());
+						RequestDispatcher view = getServletContext().getRequestDispatcher("/index.html"); 
+						view.forward(request,response);
+					}
+				} catch (NumberFormatException | SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
 			
 		}
 	}

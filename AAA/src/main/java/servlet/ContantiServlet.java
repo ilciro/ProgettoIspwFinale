@@ -36,19 +36,40 @@ public class ContantiServlet extends HttpServlet {
 	 */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
-    	if(SystemBean.getIstance().getSpesaT()>0.0) 
+    	String negozio=request.getParameter("negozioC");
+    	
+    	
+    	//SystemBean.getIstance().setSpesaT((float)11.3);
+    	SystemBean.getIstance().setMetodoP("cash");
+    	
+    	if(negozio==null)
+    	{
+    		SystemBean.getIstance().setNegScelto(false);
+        	System.out.println("NEgozio :"+ negozio);
+
+
+    	}
+    	else
+    	{
+    		SystemBean.getIstance().setNegScelto(true);
+        	System.out.println("NEgozio :"+ negozio);
+
+
+    	}
+    	if(SystemBean.getIstance().getSpesaT()>0.0 ) 
     	{
     		request.setAttribute("bean",SystemBean.getIstance());
+    		
     		RequestDispatcher view = getServletContext().getRequestDispatcher("/contanti.jsp"); 
     		view.forward(request,response);
     		
     	}
+    	
     	else {
     		bE.setE(new NumberFormatException("spesa totale < 0.0"));
     		request.setAttribute("bean1",bE);
     		RequestDispatcher view = getServletContext().getRequestDispatcher("/errore.jsp"); 
     		view.forward(request,response);
-    		
     	}
     	
 	}

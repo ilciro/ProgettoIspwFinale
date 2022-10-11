@@ -31,9 +31,24 @@ public class CCServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String negozio1=request.getParameter("negozioC1");
+		SystemBean.getIstance().setMetodoP("cc");
+		if(negozio1==null)
+		{
+			SystemBean.getIstance().setNegScelto(false);
+        	System.out.println("NEgozio :"+ negozio1);
+
+		}
+		else
+		{
+			SystemBean.getIstance().setNegScelto(true);
+        	System.out.println("NEgozio :"+ negozio1);
+
+		}
 		if(SystemBean.getIstance().getSpesaT()>0.0) 
     	{
     		request.setAttribute("bean",SystemBean.getIstance());
+
     		RequestDispatcher view = getServletContext().getRequestDispatcher("/cartaCredito.jsp"); 
     		view.forward(request,response);
     		

@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import it.uniroma2.ispw.model.Negozio;
 import it.uniroma2.ispw.utilities.ConnToDb;
@@ -15,8 +17,11 @@ public class NegozioDao {
 	private  Connection conn =null;
 	private  ResultSet rs=null;
 	private Statement stmt=null;
-	private boolean state=false;
+	private boolean state=false,state1=false;
 	private PreparedStatement prepQ=null;
+	private int disp;
+	private int aperto;
+	
 	
 	
     
@@ -90,10 +95,14 @@ public class NegozioDao {
 		 stmt=conn.createStatement();
 		
 			 rs= stmt.executeQuery("select isOpen from ispw.negozio where  nome='"+shop.getNome()+"'");
-			while(rs.next()){
-				rs.getInt(1);
+			if(rs.next()){
+				aperto=rs.getInt(1);
+				if(aperto==1)
+					state=true;
+				else
+					state=false;
 			}
-			state=true;			
+				
 			
 		conn.close();
 		return state;
@@ -107,14 +116,46 @@ public class NegozioDao {
 		
 			stmt = conn.createStatement();
 			//add or id per matchare nel ControlelrPagamento
-			rs = stmt.executeQuery("select isValid from negozio where nome ='"+shop.getNome()+"' ");
-			while ( rs.next() ) {
+			rs = stmt.executeQuery("select isValid from ispw.negozio where nome ='"+shop.getNome()+"' ");
+			if ( rs.next() ) {
 
-					rs.getInt(1);
+					disp=rs.getInt(1);
+					if (disp==1)
+						state1=true;
+					else
+						state1=false;
 			}
-			state=true;
+			
+			conn.close();
+			
+		return state1;
+	}
+	
+	public List<Negozio> getNegoziList() throws SQLException
+	{
+		Negozio shop; 
+		
+		 List<Negozio> listOfNegozi;
+		listOfNegozi=new ArrayList<Negozio>();
+
+		
+
+			 conn= ConnToDb.generalConnection();
+			 prepQ=conn.prepareStatement("SELECT  "
+						+ "`negozio`.`nome`,"
+		        		+ "    `negozio`.`via`,"
+		        		+ "    `negozio`.`isValid`,"
+		        		+ "    `negozio`.`isOpen`"
+		        		+ "FROM `ispw`.`negozio`");
+	 			rs=prepQ.executeQuery();
+			
+				while (rs.next())
+				{
+					shop = new Negozio(rs.getString(1),rs.getString(2),rs.getBoolean(3),rs.getBoolean(4));
+					listOfNegozi.add(shop);
+				}
 		conn.close();
-		return state;
+		return listOfNegozi;
 	}
 
 }

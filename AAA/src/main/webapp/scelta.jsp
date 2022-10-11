@@ -35,9 +35,7 @@ importo
 </label>
 </td>
 <td> 
-<label for="totL">
 ${bean.getSpesaT() }
-</label>
 </td>
 </tr>
 </table>
@@ -61,7 +59,7 @@ ${bean.getSpesaT() }
 <tr>
 <td>
 <label for="negozioC"></label>
-<input type="checkbox" id="negozioC">
+<input type="checkbox" id="negozioC" name="negozioC">
 ritiro in negozio
 </td>
 <td>
@@ -90,7 +88,7 @@ ritiro in negozio
 <tr>
 <td>
 <label for="negozioC1"></label>
-<input type="checkbox" id="negozioC1">
+<input type="checkbox" id="negozioC1" name="negozioC1">
 ritiro in negozio
 </td>
 <td>
