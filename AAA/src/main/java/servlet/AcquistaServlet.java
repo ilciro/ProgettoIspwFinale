@@ -11,9 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bean.ExceptionBean;
+import bean.GiornaleBean;
 import bean.LibroBean;
 import bean.SystemBean;
+import it.uniroma2.ispw.database.GiornaleDao;
 import it.uniroma2.ispw.database.LibroDao;
+import it.uniroma2.ispw.model.raccolta.Giornale;
 import it.uniroma2.ispw.model.raccolta.Libro;
 
 /**
@@ -26,6 +29,9 @@ public class AcquistaServlet extends HttpServlet {
 	private Libro lib=new Libro();
 	private LibroBean lB=new LibroBean();
 	private ExceptionBean bE=new ExceptionBean();
+	private GiornaleBean gB=new GiornaleBean();
+	private GiornaleDao gD=new GiornaleDao();
+	private Giornale g=new Giornale ();
 	//private AcquistaBean aB=new AcquistaBean();
 
        
@@ -46,13 +52,61 @@ public class AcquistaServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
+		/*TODO
+		 *  vedere riuso questa servlet
+		 * 
+		 */
 		
 		try {
 			String id=request.getParameter("idL");
+			if(SystemBean.getIstance().getType().equals("giornale"))
+			{
+				if(id==null)
+				{
+					 //ricarico stessa pagina e la popolo
+
+					id="0";
+					gB.setMiaListaG(gD.getGiornaliList());
+					request.setAttribute("bean1",SystemBean.getIstance());
+				    request.setAttribute("bean",gB); 
+				    RequestDispatcher view = getServletContext().getRequestDispatcher("/giornali.jsp"); 
+					view.forward(request,response); 
+				}
+				else if(Integer.parseInt(id)>=1 && Integer.parseInt(id)<SystemBean.getIstance().getElemLista()) {
+					gB.setId(Integer.parseInt(id));
+					String titolo;
+					String tipologia;
+					int disp;
+					g.setId(gB.getId());
+					
+					titolo=gD.getNome(g);
+					tipologia=gD.retTip(g);
+					disp=gD.getDisp(g);
+					
+					gB.setTitolo(titolo);
+					gB.setTipologia(tipologia);
+					gB.setDisponibilita(disp);
+					
+					SystemBean.getIstance().setId(Integer.parseInt(id));
+					
+					 request.setAttribute("bean",gB);  
+					 request.setAttribute("bean1", SystemBean.getIstance());
+					RequestDispatcher view = getServletContext().getRequestDispatcher("/acquista.jsp"); 
+					view.forward(request,response); 
+				}
+				else {
+					
+					RequestDispatcher view = getServletContext().getRequestDispatcher("/giornali.jsp"); 
+					view.forward(request,response); 
+				}
+			}
+			
+			
+			
+			
+			
 			if(id==null)
 			{
-				 System.out.println("aaa");
-				 
 				 id="0";
 					
 				lB.setMiaLista(lD.getLibriSingoloList());

@@ -11,30 +11,31 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bean.ExceptionBean;
-import bean.LibroBean;
+import bean.GiornaleBean;
 import bean.SystemBean;
-import it.uniroma2.ispw.database.LibroDao;
-import it.uniroma2.ispw.model.raccolta.Libro;
-
-
+import it.uniroma2.ispw.database.GiornaleDao;
+import it.uniroma2.ispw.model.raccolta.Giornale;
 
 /**
- * Servlet implementation class LibroServlet
+ * Servlet implementation class GiornaleServlet
  */
-@WebServlet("/LibroServlet")
-public class LibroServlet extends HttpServlet {
+@WebServlet("/GiornaleServlet")
+public class GiornaleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private LibroBean lB=new LibroBean();
-	private LibroDao lD=new LibroDao();
-	private Libro l=new Libro();
-	private ExceptionBean eB=new ExceptionBean();
+	private GiornaleBean gB=new GiornaleBean();
+	private GiornaleDao gD=new GiornaleDao();
 	private int lunghezza;
+	private Giornale g=new Giornale();
+	private ExceptionBean eB=new ExceptionBean();
 	
-
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-   
+    public GiornaleServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -44,34 +45,32 @@ public class LibroServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		SystemBean.getIstance().setType("giornale");
 		
-		SystemBean.getIstance().setType("libro");		
-		String id=request.getParameter("idL");
-		
+		String id=request.getParameter("idG");
 		
 		try {
-			lunghezza=lD.getLibriSingoloList().size();
-			SystemBean.getIstance().setElemLista(lunghezza);
-			
+			 lunghezza=gD.getGiornaliList().size();
+			 SystemBean.getIstance().setElemLista(lunghezza);
 		
 			if(Integer.parseInt(id)==0)
 			{
 						
 				
-					lB.setMiaLista(lD.getLibriSingoloList());			
-					request.setAttribute("bean", lB);
-					RequestDispatcher view = getServletContext().getRequestDispatcher("/libri.jsp"); 
+					gB.setMiaListaG(gD.getGiornaliList());			
+					request.setAttribute("bean", gB);
+					RequestDispatcher view = getServletContext().getRequestDispatcher("/giornali.jsp"); 
 					view.forward(request,response); 
 			}
 			else if(Integer.parseInt(id)>=1 && Integer.parseInt(id)<=lunghezza)
 			{
 				
-				l.setId(Integer.parseInt(id));
-				lB.setMiaLista(lD.getLibriSingoloByIdLista(l));
-				request.setAttribute("bean",lB);
-				RequestDispatcher view = getServletContext().getRequestDispatcher("/mostraLibro.jsp"); 
+				g.setId(Integer.parseInt(id));
+				gB.setMiaListaG(gD.getGiornaliListSingolo(g));
+				request.setAttribute("bean",gB);
+				RequestDispatcher view = getServletContext().getRequestDispatcher("/giornaleSingolo.jsp"); 
 				view.forward(request,response); 
 				
 			}
@@ -90,24 +89,14 @@ public class LibroServlet extends HttpServlet {
 				view.forward(request,response); 
 			}
 			
-
-		 
-			
+		} catch (SQLException e) {
 		
-		
-		
-			
-		} catch (SQLException| ServletException| NumberFormatException e) {
 			eB.setE(e);
-		
-			request.setAttribute("bean1",eB);
+			request.setAttribute("bean",eB);
 			RequestDispatcher view = getServletContext().getRequestDispatcher("/errore.jsp"); 
 			view.forward(request,response); 
 		}
-		
-		
-		
-		
 	}
+    
 
 }

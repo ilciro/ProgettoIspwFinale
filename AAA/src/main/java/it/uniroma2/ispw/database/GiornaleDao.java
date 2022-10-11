@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 
 import it.uniroma2.ispw.controller.ControllerSystemState;
@@ -158,7 +160,57 @@ public class GiornaleDao {
 		conn.close();
 		return catalogo;
 	}
+	
+	public  List<Giornale> getGiornaliList() throws SQLException   {
 
+		List<Giornale> catalogo=new ArrayList<>();
+
+	
+	
+		conn= ConnToDb.generalConnection();
+		stmt=conn.createStatement();
+		rs=stmt.executeQuery("SELECT * FROM giornale");
+		while(rs.next())        
+
+		{
+			
+			f.createRaccoltaFinale1(GIORNALE, rs.getString(1),rs.getString(2), null,rs.getString(3),rs.getString(4),null);
+			f.createRaccoltaFinale2(GIORNALE,0,null,0,rs.getInt(7),rs.getFloat(8),rs.getInt(6));
+			catalogo.add((Giornale) f.createRaccoltaFinaleCompleta(GIORNALE, rs.getDate(5).toLocalDate(), null, null,rs.getInt(9)));
+		
+			
+		}
+
+
+	conn.close();
+	return catalogo;
+}
+
+	
+	public  List<Giornale> getGiornaliListSingolo(Giornale g) throws SQLException   {
+
+		List<Giornale> catalogo=new ArrayList<>();
+
+	
+	
+		conn= ConnToDb.generalConnection();
+		stmt=conn.createStatement();
+		rs=stmt.executeQuery("SELECT * FROM ispw.giornale where id='"+g.getId()+"'");
+		while(rs.next())        
+
+		{
+			
+			f.createRaccoltaFinale1(GIORNALE, rs.getString(1),rs.getString(2), null,rs.getString(3),rs.getString(4),null);
+			f.createRaccoltaFinale2(GIORNALE,0,null,0,rs.getInt(7),rs.getFloat(8),rs.getInt(6));
+			catalogo.add((Giornale) f.createRaccoltaFinaleCompleta(GIORNALE, rs.getDate(5).toLocalDate(), null, null,rs.getInt(9)));
+		
+			
+		}
+
+
+	conn.close();
+	return catalogo;
+}
 
 	public  Giornale getGiornale(Giornale g,int id) throws SQLException  
 	{
