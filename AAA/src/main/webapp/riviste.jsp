@@ -1,18 +1,21 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <!DOCTYPE html>
 <html lang=en-it>
 <head>
 <meta charset="ISO-8859-1">
-<title>Elenco dei giornali</title>
-</head>
 <link rel="stylesheet" href="css//CssFile.css">
+
+<title>Pagina riviste</title>
+</head>
 <body>
+
 <h1> Elenco oggetti prenseti nel db</h1>
 
 <table>
 <caption>
+elenco riviste
 </caption>
 <tr>
 <th scope="col">
@@ -20,6 +23,9 @@ titolo
 </th>
 <th>
 tipologia
+</th>
+<th>
+autore
 </th>
 <th>
 lingua
@@ -31,21 +37,19 @@ editore
 data pubblicazione
 </th>
 <th>
-copie rimanenti
-</th>
-<th>
-disponibilita
+disp
 </th>
 <th>
 prezzo
 </th>
 <th>
+copie rimanenti
+</th>
+<th>
 id
 </th>
 </tr>
-
-
-<c:forEach items="#{bean.miaListaG }" var="lista">
+<c:forEach items="#{bean.listaR }" var="lista">
 
 
 
@@ -53,12 +57,13 @@ id
 
 <td>${lista.getTitolo() }</td>
 <td>${lista.getTipologia() }</td>
+<td>${lista.getAutore() }</td>
 <td>${lista.getLingua() }</td>
 <td>${lista.getEditore() }</td>
 <td>${lista.getDataPubb() }</td>
-<td>${lista.getCopieRimanenti() }</td>
-<td>${lista.getDisponibilita() }</td>
+<td>${lista.getDisp() }</td>
 <td>${lista.getPrezzo() }</td>
+<td>${lista.getCopieRim() }</td>
 <td>${lista.getId() }</td>
 </tr>
 
@@ -70,10 +75,10 @@ id
 <br>
 <form action="AcquistaServlet" method="post">
 <table>
-<caption>
-</caption>
+<caption></caption>
 <tr>
-<th scope="col"></th>
+<th scope="col">
+</th>
 </tr>
 <tr>
 <td>

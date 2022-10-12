@@ -8,6 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 
 import it.uniroma2.ispw.controller.ControllerSystemState;
@@ -139,6 +141,30 @@ public class RivistaDao {
         			f.createRaccoltaFinale1(RIVISTA, rs.getString(1),rs.getString(2), rs.getString(3),rs.getString(4),rs.getString(5),null);
 					f.createRaccoltaFinale2(RIVISTA,0,null,0,rs.getInt(8),rs.getFloat(9),rs.getInt(10));
 					catalogo.add(f.createRaccoltaFinaleCompleta(RIVISTA, rs.getDate(7).toLocalDate(), null, null,rs.getInt(11)));
+		
+					
+        		
+            }
+		return catalogo;
+		
+	}
+	
+	public List<Rivista> getRivisteList() throws SQLException
+	{
+		 conn= ConnToDb.generalConnection();
+
+		
+		List<Rivista> catalogo=new ArrayList<>();
+		 
+		st=conn.createStatement();
+		rs=st.executeQuery(riv);
+            while(rs.next())
+            {
+
+        		
+        			f.createRaccoltaFinale1(RIVISTA, rs.getString(1),rs.getString(2), rs.getString(3),rs.getString(4),rs.getString(5),null);
+					f.createRaccoltaFinale2(RIVISTA,0,null,0,rs.getInt(8),rs.getFloat(9),rs.getInt(10));
+					catalogo.add((Rivista) f.createRaccoltaFinaleCompleta(RIVISTA, rs.getDate(7).toLocalDate(), null, null,rs.getInt(11)));
 		
 					
         		
@@ -413,6 +439,28 @@ public class RivistaDao {
 
 	public ObservableList<Rivista> getRivistaSingoloById(Rivista r) throws SQLException {
 		ObservableList<Rivista> catalogo=FXCollections.observableArrayList();
+
+		
+		conn= ConnToDb.generalConnection();
+		st=conn.createStatement();
+		rs=st.executeQuery("SELECT * from RIVISTA where id='"+r.getId()+"'");
+
+            if(rs.next())
+            {
+
+        		
+        			f.createRaccoltaFinale1(RIVISTA, rs.getString(1),rs.getString(2), rs.getString(3),rs.getString(4),rs.getString(5),null);
+					f.createRaccoltaFinale2(RIVISTA,0,null,0,rs.getInt(8),rs.getFloat(9),rs.getInt(10));
+					catalogo.add((Rivista) f.createRaccoltaFinaleCompleta(RIVISTA, rs.getDate(7).toLocalDate(), null, rs.getString(6),rs.getInt(11)));
+            }
+          conn.close();            
+		
+		return catalogo;
+		
+	}
+	
+	public List<Rivista> getRivistaSingoloByIdLista(Rivista r) throws SQLException {
+		List<Rivista> catalogo=new ArrayList<>();
 
 		
 		conn= ConnToDb.generalConnection();

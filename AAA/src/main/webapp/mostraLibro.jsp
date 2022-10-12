@@ -87,6 +87,48 @@ idProdotto
 </c:forEach>
 
 </table>
+<br>
+<form action="AcquistaServlet" method="post">
+<table>
+<caption></caption>
+<tr>
+<th scope="col"></th>
+</tr>
+<tr>
+<td>
+<label for="idL" ></label>
+</td>
+<td>
+<button type="submit" name="buttonI" value="buttonI">Inserire nr oggetto scelto</button>
+<input type="text" name="idL" id="idL">
+</td>
+</tr>
+</table>
+</form>
+
+
+<br>
+<br>
+<table>
+<caption>
+</caption>
+<tr>
+<th scope="col"></th>
+</tr>
+<tr>
+
+<tr>
+<td>
+<a href="index.html">
+<button type="submit" id="buttonI">
+home page
+</button>
+</a>
+
+</td>
+</tr>
+
+</table>
 
 
 

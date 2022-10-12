@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.itextpdf.text.DocumentException;
 
+import bean.GiornaleBean;
 import bean.LibroBean;
+import bean.RivistaBean;
 import bean.SystemBean;
 
 /**
@@ -21,6 +23,8 @@ import bean.SystemBean;
 public class DownloadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private LibroBean lB=new LibroBean();
+	private GiornaleBean gB=new GiornaleBean();
+	private RivistaBean rB=new RivistaBean();
 
        
     /**
@@ -48,17 +52,36 @@ public class DownloadServlet extends HttpServlet {
 		else {
 		//mettere if su tipo ogetto
 		try {
-			lB.scarica();
-		
-			lB.leggi(SystemBean.getIstance().getId());
+			if(SystemBean.getIstance().getType().equals("libro"))
+			{
+				lB.scarica();		
+				lB.leggi(SystemBean.getIstance().getId());		
+				request.setAttribute("bean1",SystemBean.getIstance());
+				request.setAttribute("bean","lB");
+				RequestDispatcher view = getServletContext().getRequestDispatcher("/index.html"); 
+				view.forward(request,response); 
+			}
+			else if(SystemBean.getIstance().getType().equals("giornale"))
+			{
+				gB.scarica();
+				gB.leggi(SystemBean.getIstance().getId());
+				request.setAttribute("bean1",SystemBean.getIstance());
+				request.setAttribute("bean","gB");
+				RequestDispatcher view = getServletContext().getRequestDispatcher("/index.html"); 
+				view.forward(request,response); 
+			}
+			else if(SystemBean.getIstance().getType().equals("rivista"))
+			{
+				rB.scarica();
+				rB.leggi(SystemBean.getIstance().getId());
+				request.setAttribute("bean1",SystemBean.getIstance());
+				request.setAttribute("bean","rB");
+				RequestDispatcher view = getServletContext().getRequestDispatcher("/index.html"); 
+				view.forward(request,response); 
+			}
 		} catch (DocumentException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		request.setAttribute("bean1",SystemBean.getIstance());
-		request.setAttribute("bean","lB");
-		RequestDispatcher view = getServletContext().getRequestDispatcher("/index.html"); 
-		view.forward(request,response); 
+			}
 		}
 	}
 

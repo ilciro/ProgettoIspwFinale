@@ -12,16 +12,22 @@ import javax.servlet.http.HttpServletResponse;
 
 import bean.ExceptionBean;
 import bean.FatturaBean;
+import bean.GiornaleBean;
 import bean.LibroBean;
 import bean.PagamentoBean;
+import bean.RivistaBean;
 import bean.SystemBean;
 import bean.UserBean;
 import it.uniroma2.ispw.database.ContrassegnoDao;
+import it.uniroma2.ispw.database.GiornaleDao;
 import it.uniroma2.ispw.database.LibroDao;
 import it.uniroma2.ispw.database.PagamentoDao;
+import it.uniroma2.ispw.database.RivistaDao;
 import it.uniroma2.ispw.model.Fattura;
 import it.uniroma2.ispw.model.Pagamento;
+import it.uniroma2.ispw.model.raccolta.Giornale;
 import it.uniroma2.ispw.model.raccolta.Libro;
+import it.uniroma2.ispw.model.raccolta.Rivista;
 
 /**
  * Servlet implementation class ServletPagamentoContanti
@@ -39,6 +45,12 @@ public class ServletPagamentoContanti extends HttpServlet {
 	private LibroBean lB=new LibroBean();
 	private LibroDao lD=new LibroDao();
 	private Libro l=new Libro();
+	private Giornale g=new Giornale();
+	private GiornaleDao gD=new GiornaleDao();
+	private GiornaleBean gB=new GiornaleBean();
+	private Rivista r=new Rivista();
+	private RivistaDao rD=new RivistaDao();
+	private RivistaBean rB=new RivistaBean();
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -71,12 +83,25 @@ public class ServletPagamentoContanti extends HttpServlet {
 			
 		}
 		else {
-			//faccio pagamento
-			l.setId(SystemBean.getIstance().getId());
 			try {
-				lB.setTitolo(lD.getTitolo(l));
+			//faccio pagamento
+				if(SystemBean.getIstance().getType().equals("libro"))
+				{
+					l.setId(SystemBean.getIstance().getId());					
+					lB.setTitolo(lD.getTitolo(l));
+				}
+				else if(SystemBean.getIstance().getType().equals("giornale"))
+				{
+					g.setId(SystemBean.getIstance().getId());
+					gB.setTitolo(gD.getNome(g));
+				}
+				else if(SystemBean.getIstance().getType().equals("rivista"))
+				{
+					r.setId(SystemBean.getIstance().getId());
+					rB.setTitolo(rD.getNome(r));
+				}
+			
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			pB.setId(0);
@@ -101,7 +126,6 @@ public class ServletPagamentoContanti extends HttpServlet {
 				pD.inserisciPagamento(p);
 				fD.inserisciFattura(f);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			request.setAttribute("bean",UserBean.getInstance());

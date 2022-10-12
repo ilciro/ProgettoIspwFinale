@@ -13,9 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 import bean.ExceptionBean;
 import bean.SystemBean;
 import it.uniroma2.ispw.database.ContrassegnoDao;
+import it.uniroma2.ispw.database.GiornaleDao;
 import it.uniroma2.ispw.database.LibroDao;
 import it.uniroma2.ispw.database.PagamentoDao;
+import it.uniroma2.ispw.database.RivistaDao;
+import it.uniroma2.ispw.model.raccolta.Giornale;
 import it.uniroma2.ispw.model.raccolta.Libro;
+import it.uniroma2.ispw.model.raccolta.Rivista;
 
 /**
  * Servlet implementation class CancellaPagamentoServlet
@@ -28,6 +32,10 @@ public class CancellaPagamentoServlet extends HttpServlet {
 	private PagamentoDao pD=new PagamentoDao();
 	private Libro l=new Libro();
 	private LibroDao lD=new LibroDao();
+	private Giornale g=new Giornale();
+	private GiornaleDao gD=new GiornaleDao();
+	private Rivista r=new Rivista();
+	private RivistaDao rD=new RivistaDao();
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -42,6 +50,7 @@ public class CancellaPagamentoServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		System.out.println(" tipo pagamento :"+ SystemBean.getIstance().getMetodoP());
+		System.out.println(" oggetto nel cancella sevlet :"+ SystemBean.getIstance().getType() );
 		
 		String id=request.getParameter("idCanc");
 		if(Integer.parseInt(id)<0)
@@ -60,10 +69,12 @@ public class CancellaPagamentoServlet extends HttpServlet {
 		}
 		else
 		{
-			boolean delF,delP;
-			if(SystemBean.getIstance().getMetodoP().equals("cash"))
+			if(SystemBean.getIstance().getType().equals("libro"))
 			{
-				try {
+				boolean delF,delP;
+				if(SystemBean.getIstance().getMetodoP().equals("cash"))
+				{
+					try {
 					delF=fD.annullaOrdine(Integer.parseInt(id));
 					delP=pD.annullaOrdine(Integer.parseInt(id));
 					if(delF && delP)
@@ -75,10 +86,10 @@ public class CancellaPagamentoServlet extends HttpServlet {
 						RequestDispatcher view = getServletContext().getRequestDispatcher("/index.html"); 
 						view.forward(request,response);
 					}
-				} catch (NumberFormatException | SQLException e) {
+					} catch (NumberFormatException | SQLException e) {
 					e.printStackTrace();
+					}
 				}
-			}
 			else {
 				try {
 					delP=pD.annullaOrdine(Integer.parseInt(id));
@@ -97,6 +108,81 @@ public class CancellaPagamentoServlet extends HttpServlet {
 			}
 			
 			
+		}
+			else if(SystemBean.getIstance().getType().equals("giornale"))
+			{
+				boolean delF,delP;
+				if(SystemBean.getIstance().getMetodoP().equals("cash"))
+				{
+					try {
+					delF=fD.annullaOrdine(Integer.parseInt(id));
+					delP=pD.annullaOrdine(Integer.parseInt(id));
+					if(delF && delP)
+					{
+						g.setId(SystemBean.getIstance().getId());
+						gD.aggiornaDisponibilita(g);
+						request.setAttribute("bean", SystemBean.getIstance());
+						RequestDispatcher view = getServletContext().getRequestDispatcher("/index.html"); 
+						view.forward(request,response);
+					}
+					} catch (NumberFormatException | SQLException e) {
+					e.printStackTrace();
+					}
+				}
+			else {
+				try {
+					delP=pD.annullaOrdine(Integer.parseInt(id));
+					if( delP)
+					{
+						g.setId(SystemBean.getIstance().getId());
+						gD.aggiornaDisponibilita(g);
+						
+						request.setAttribute("bean", SystemBean.getIstance());
+						RequestDispatcher view = getServletContext().getRequestDispatcher("/index.html"); 
+						view.forward(request,response);
+					}
+				} catch (NumberFormatException | SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+			else if(SystemBean.getIstance().getType().equals("rivista"))
+			{
+				boolean delF,delP;
+				if(SystemBean.getIstance().getMetodoP().equals("cash"))
+				{
+					try {
+					delF=fD.annullaOrdine(Integer.parseInt(id));
+					delP=pD.annullaOrdine(Integer.parseInt(id));
+					if(delF && delP)
+					{
+						r.setId(SystemBean.getIstance().getId());
+						rD.aggiornaDisponibilita(r);
+						request.setAttribute("bean", SystemBean.getIstance());
+						RequestDispatcher view = getServletContext().getRequestDispatcher("/index.html"); 
+						view.forward(request,response);
+					}
+					} catch (NumberFormatException | SQLException e) {
+					e.printStackTrace();
+					}
+				}
+			else {
+				try {
+					delP=pD.annullaOrdine(Integer.parseInt(id));
+					if( delP)
+					{
+						r.setId(SystemBean.getIstance().getId());
+						rD.aggiornaDisponibilita(r);
+						
+						request.setAttribute("bean", SystemBean.getIstance());
+						RequestDispatcher view = getServletContext().getRequestDispatcher("/index.html"); 
+						view.forward(request,response);
+					}
+				} catch (NumberFormatException | SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			}
 		}
 	}
 

@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,16 +15,22 @@ import javax.servlet.http.HttpServletResponse;
 
 import bean.CartaCreditoBean;
 import bean.ExceptionBean;
+import bean.GiornaleBean;
 import bean.LibroBean;
 import bean.PagamentoBean;
+import bean.RivistaBean;
 import bean.SystemBean;
 import bean.UserBean;
 import it.uniroma2.ispw.database.CartaCreditoDao;
+import it.uniroma2.ispw.database.GiornaleDao;
 import it.uniroma2.ispw.database.LibroDao;
 import it.uniroma2.ispw.database.PagamentoDao;
+import it.uniroma2.ispw.database.RivistaDao;
 import it.uniroma2.ispw.model.CartaDiCredito;
 import it.uniroma2.ispw.model.Pagamento;
+import it.uniroma2.ispw.model.raccolta.Giornale;
 import it.uniroma2.ispw.model.raccolta.Libro;
+import it.uniroma2.ispw.model.raccolta.Rivista;
 
 /**
  * Servlet implementation class ServletPagamentoCC
@@ -44,23 +51,25 @@ public class ServletPagamentoCC extends HttpServlet {
      private LibroBean lB=new LibroBean();
      private PagamentoDao pD=new PagamentoDao();
      private Pagamento p;
+     private Giornale g=new Giornale();
+     private GiornaleDao gD=new GiornaleDao();
+     private  java.util.Date utilDate;
+     private java.sql.Date sqlDate;
+     private Rivista r=new Rivista();
+     private RivistaBean rB=new RivistaBean();
+     private RivistaDao rD=new RivistaDao();
+     private GiornaleBean gB=new GiornaleBean();
     /**
      * @see HttpServlet#HttpServlet()
      */
     public ServletPagamentoCC() {
         super();
-        // TODO Auto-generated constructor stub
+        
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	
-		/*
-		request.setAttribute("bean2", lB);
-		RequestDispatcher view = getServletContext().getRequestDispatcher("/esitoPositivo.jsp"); 
-		view.forward(request,response); 
-		*/
 	
 
 	/**
@@ -93,8 +102,8 @@ public class ServletPagamentoCC extends HttpServlet {
 			SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
 
 		    try {
-		        java.util.Date utilDate = format.parse(scad);
-		        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+		         utilDate = format.parse(scad);
+		        sqlDate = new java.sql.Date(utilDate.getTime());
 		        System.out.println(sqlDate);
 		        cCB.setScadenza(sqlDate);
 		    } catch (ParseException e) {
@@ -110,7 +119,7 @@ public class ServletPagamentoCC extends HttpServlet {
 			cc.setNomeUser(cCB.getNomeUser());
 			cc.setCognomeUser(cCB.getCognomeUser());
 			cc.setNumeroCC(cCB.getNumeroCC());
-			cc.setScadenza((java.sql.Date)cCB.getScadenza());
+			cc.setScadenza((Date) cCB.getScadenza());
 			cc.setCiv(cCB.getCiv());
 			cc.setAmmontare(SystemBean.getIstance().getSpesaT());
 			try {
@@ -118,13 +127,27 @@ public class ServletPagamentoCC extends HttpServlet {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			
-			//faccio pagamento
-			l.setId(SystemBean.getIstance().getId());
 			try {
-				lB.setTitolo(lD.getTitolo(l));
+				if(SystemBean.getIstance().getType().equals("libro"))
+				{
+					l.setId(SystemBean.getIstance().getId());					
+					lB.setTitolo(lD.getTitolo(l));
+				}
+				else if(SystemBean.getIstance().getType().equals("giornale"))
+				{
+					g.setId(SystemBean.getIstance().getId());
+					gB.setTitolo(gD.getNome(g));
+				}
+				else if(SystemBean.getIstance().getType().equals("rivista"))
+				{
+					r.setId(SystemBean.getIstance().getId());
+					rB.setTitolo(rD.getNome(r));
+					
+				}
+			//faccio pagamento
+			
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
+				
 				e1.printStackTrace();
 			}
 			pB.setId(0);

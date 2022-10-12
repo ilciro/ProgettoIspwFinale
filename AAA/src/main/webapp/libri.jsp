@@ -12,10 +12,7 @@
 </head>
 <body>
 
-
-
-
-
+<h1> Elenco oggetti prenseti nel db</h1>
 
 <table>
 <caption>Riepilogo libro</caption>
@@ -94,13 +91,30 @@ id prodotto
 </c:forEach>
 
 </table>
-<form action="AcquistaServlet" method="post">
+
+
 <br>
+<form action="AcquistaServlet" method="post">
+<table>
+<caption></caption>
+<tr>
+<th scope="col">
+</th>
+</tr>
+<tr>
+<td>
 <label for="idL" ></label>
+</td>
+<td>
 <button type="submit" name="buttonI" value="buttonI">Inserire nr oggetto scelto</button>
 <input type="text" name="idL" id="idL">
-
+</td>
+</tr>
+</table>
 </form>
+
+
+
 
 <br>
 <br>

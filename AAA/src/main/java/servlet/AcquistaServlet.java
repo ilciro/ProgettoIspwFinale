@@ -13,11 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 import bean.ExceptionBean;
 import bean.GiornaleBean;
 import bean.LibroBean;
+import bean.RivistaBean;
 import bean.SystemBean;
 import it.uniroma2.ispw.database.GiornaleDao;
 import it.uniroma2.ispw.database.LibroDao;
+import it.uniroma2.ispw.database.RivistaDao;
 import it.uniroma2.ispw.model.raccolta.Giornale;
 import it.uniroma2.ispw.model.raccolta.Libro;
+import it.uniroma2.ispw.model.raccolta.Rivista;
 
 /**
  * Servlet implementation class AcquistaServlet
@@ -32,7 +35,9 @@ public class AcquistaServlet extends HttpServlet {
 	private GiornaleBean gB=new GiornaleBean();
 	private GiornaleDao gD=new GiornaleDao();
 	private Giornale g=new Giornale ();
-	//private AcquistaBean aB=new AcquistaBean();
+	private RivistaBean rB=new RivistaBean();
+	private Rivista r=new Rivista();
+	private RivistaDao rD=new RivistaDao();
 
        
     /**
@@ -63,8 +68,6 @@ public class AcquistaServlet extends HttpServlet {
 			{
 				if(id==null)
 				{
-					 //ricarico stessa pagina e la popolo
-
 					id="0";
 					gB.setMiaListaG(gD.getGiornaliList());
 					request.setAttribute("bean1",SystemBean.getIstance());
@@ -72,7 +75,7 @@ public class AcquistaServlet extends HttpServlet {
 				    RequestDispatcher view = getServletContext().getRequestDispatcher("/giornali.jsp"); 
 					view.forward(request,response); 
 				}
-				else if(Integer.parseInt(id)>=1 && Integer.parseInt(id)<SystemBean.getIstance().getElemLista()) {
+				else if(Integer.parseInt(id)>=1 && Integer.parseInt(id)<=SystemBean.getIstance().getElemLista()) {
 					gB.setId(Integer.parseInt(id));
 					String titolo;
 					String tipologia;
@@ -99,87 +102,88 @@ public class AcquistaServlet extends HttpServlet {
 					RequestDispatcher view = getServletContext().getRequestDispatcher("/giornali.jsp"); 
 					view.forward(request,response); 
 				}
+			
+			}else if(SystemBean.getIstance().getType().equals("libro"))
+			{
+				
+					if(id==null)
+					{
+						id="0";
+						lB.setMiaLista(lD.getLibriSingoloList());
+						request.setAttribute("bean1",SystemBean.getIstance());
+					    request.setAttribute("bean",lB); 
+					    RequestDispatcher view = getServletContext().getRequestDispatcher("/libri.jsp"); 
+						view.forward(request,response); 
+					}
+					else if(Integer.parseInt(id)>=1 && Integer.parseInt(id)<=SystemBean.getIstance().getElemLista()) {
+						lB.setId(id);
+						String titolo;
+						String tipologia;
+						int disp;
+						lib.setId(Integer.parseInt(lB.getId()));
+						
+						titolo=lD.getTitolo(lib);
+						tipologia=lD.retTip(lib);
+						disp=lD.getDisp(lib);
+						
+						lB.setTitolo(titolo);
+						lB.setTipologia(tipologia);
+						lB.setDisponibilita(disp);
+						
+						SystemBean.getIstance().setId(Integer.parseInt(id));
+						
+						 request.setAttribute("bean",lB);  
+						 request.setAttribute("bean1", SystemBean.getIstance());
+						RequestDispatcher view = getServletContext().getRequestDispatcher("/acquista.jsp"); 
+						view.forward(request,response); 
+					}
+					else {
+						
+						RequestDispatcher view = getServletContext().getRequestDispatcher("/libri.jsp"); 
+						view.forward(request,response); 
+					
+					}
+			
 			}
-			
-			
-			
-			
-			
+			else if(SystemBean.getIstance().getType().equals("rivista"))
 			if(id==null)
 			{
-				 id="0";
-					
-				lB.setMiaLista(lD.getLibriSingoloList());
-					
-						
-				SystemBean.getIstance().setType("libro");
-				SystemBean.getIstance().setElemLista(lB.getMiaLista().size());
+				id="0";
+				rB.setListaR(rD.getRivisteList());
 				request.setAttribute("bean1",SystemBean.getIstance());
-		       request.setAttribute("bean",lB); 
-		        
-
-
-					RequestDispatcher view = getServletContext().getRequestDispatcher("/libri.jsp"); 
-					view.forward(request,response); 
-			
+			    request.setAttribute("bean",rB); 
+			    RequestDispatcher view = getServletContext().getRequestDispatcher("/riviste.jsp"); 
+				view.forward(request,response); 
+			}
+			//rivista
+			else if(Integer.parseInt(id)>=1 && Integer.parseInt(id)<=SystemBean.getIstance().getElemLista()) {
+				rB.setId(Integer.parseInt(id));
+				String titolo;
+				String tipologia;
+				int disp;
+				r.setId(rB.getId());
+				
+				titolo=rD.getNome(r);
+				tipologia=rD.retTip(r);
+				disp=rD.getDisp(r);
+				
+				rB.setTitolo(titolo);
+				rB.setTipologia(tipologia);
+				rB.setDisponibilita(disp);
+				
+				SystemBean.getIstance().setId(Integer.parseInt(id));
+				
+				 request.setAttribute("bean",rB);  
+				 request.setAttribute("bean1", SystemBean.getIstance());
+				RequestDispatcher view = getServletContext().getRequestDispatcher("/acquista.jsp"); 
+				view.forward(request,response); 
 			}
 			else {
 				
-			lB.setId(id);		
-
-			
-			String nome;
-			float costo;
-			int disp;
-			
-			lib.setId(Integer.parseInt(lB.getId()));
-			System.out.println("id :" +lB.getId());
-		//controllo id 
-			
-			if(Integer.parseInt(id)>=1 && Integer.parseInt(id)<SystemBean.getIstance().getElemLista()){
-			
-			nome=lD.getNome(lib);
-			costo=lD.getCosto(lib);
-			disp=lD.getDisp(lib);
-			
-			lB.setTitolo(nome);
-			lB.setPrezzo(costo);
-			lB.setDisponibilita(disp);
-			
-			
-			
-
-			
-			SystemBean.getIstance().setId(Integer.parseInt(id));
-			
-	        System.out.println("id del libro in acquista servlet dopo :"+SystemBean.getIstance().getId());
-
-			
-
-			 request.setAttribute("bean",lB);  
-			 request.setAttribute("bean1", SystemBean.getIstance());
-				RequestDispatcher view = getServletContext().getRequestDispatcher("/acquista.jsp"); 
+				RequestDispatcher view = getServletContext().getRequestDispatcher("/riviste.jsp"); 
 				view.forward(request,response); 
-				
-		}
-		 
-		else if(Integer.parseInt(id)>=1 && Integer.parseInt(id)>SystemBean.getIstance().getElemLista()) {
-			bE.setE(new NumberFormatException("elemento non in lista"));
-			 request.setAttribute("bean1",bE);
-			RequestDispatcher view = getServletContext().getRequestDispatcher("/libri.jsp"); 
-			view.forward(request,response); 
 			
-		}
-		else if(Integer.parseInt(id)<=0){
-			bE.setE(new NumberFormatException("elemento nullo"));
-			 request.setAttribute("bean1",bE);
-			RequestDispatcher view = getServletContext().getRequestDispatcher("/libri.jsp"); 
-			view.forward(request,response); 
-			
-		}
-		
-		
-		}
+			}
 		
 	
 		} catch (ServletException| NumberFormatException |SQLException e) {

@@ -47,16 +47,7 @@ id
 
 <c:forEach items="#{bean.miaListaG }" var="lista">
 
-<!--  
-<c:choose>
-<c:when test="${lista.getDisponibilita()==0 }">
-<link rel="stylesheet" href="css//tableError.css">
-</c:when>
-<c:when test="${lista.getDisponibilita()==1 }">
-<link rel="stylesheet" href="css//tableRight.css">
-</c:when>
-</c:choose>
--->
+
 
 <tr>
 
@@ -75,6 +66,52 @@ id
 
 
 </table>
+
+<br>
+<form action="AcquistaServlet" method="post">
+<table>
+<caption>
+</caption>
+<tr>
+<th scope="col"></th>
+</tr>
+<tr>
+<td>
+<label for="idL" ></label>
+</td>
+<td>
+<button type="submit" name="buttonI" value="buttonI">Inserire nr oggetto scelto</button>
+<input type="text" name="idL" id="idL">
+</td>
+</tr>
+</table>
+</form>
+
+
+
+<br>
+<br>
+<table>
+<caption>
+</caption>
+<tr>
+<th scope="col"></th>
+</tr>
+<tr>
+
+<tr>
+<td>
+<a href="index.html">
+<button type="submit" id="buttonI">
+home page
+</button>
+</a>
+
+</td>
+</tr>
+
+</table>
+
 
 </body>
 </html>
