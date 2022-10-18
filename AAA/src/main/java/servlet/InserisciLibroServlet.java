@@ -63,6 +63,8 @@ public class InserisciLibroServlet extends HttpServlet {
 		String copieL=request.getParameter("copieL");
 		String generaL=request.getParameter("generaL");
 		String catS=request.getParameter("catS");
+		String buttonC=request.getParameter("confermaB");
+		String buttonA=request.getParameter("annullaB");
 		
 		if(generaL!=null && generaL.equals("prendi lista"))
 		{
@@ -105,87 +107,97 @@ public class InserisciLibroServlet extends HttpServlet {
 			view.forward(request,response);
 		}
 		
-		if(codL!=null && codL!="" && codL.length()<=10)
+		if(buttonC!=null && buttonC.equals("conferma"))
 		{
-			lB.setTitolo(titolo);
-			lB.setCodIsbn(codL);
-			lB.setNumeroPagine(Integer.parseInt(nrPagL));
-			lB.setEditore(editoreL);
-			lB.setAutore(autoreL);
-			lB.setLingua(linguaL);
-			lB.setCategoria(catS);
 			
-			SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
-
-		    try {
-		         utilDate = format.parse(dataL);
-		        sqlDate = new java.sql.Date(utilDate.getTime());
-		        System.out.println(sqlDate);
-		        lB.setDate(sqlDate);
-		    } catch (ParseException e) {
-		        e.printStackTrace();
-		    }
-			
-		    lB.setRecensione(recensione);
-		    lB.setDesc(desc);
-		    lB.setDisponibilita(0);
-		    if(checkL!=null)
-		    {
-		    	lB.setDisponibilita(1);
-		    }
-		    
-			lB.setPrezzo(Float.parseFloat(prezzoL));
-			lB.setNrCopie(Integer.parseInt(copieL));
-			
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/d");
-			  String date = dataL;
-
-			  //convert String to LocalDate
-			  LocalDate localDate = LocalDate.parse(date, formatter);
 		
-		
-			  
-		l.setTitolo(lB.getTitolo());
-		l.setNumeroPagine(lB.getNumeroPagine());
-		l.setCodIsbn(lB.getCodIsbn());
-		l.setEditore(lB.getEditore());
-		l.setAutore(lB.getAutore());
-		l.setLingua(lB.getLingua());
-		l.setCategoria(lB.getCategoria());
-		l.setDataPubb(localDate);
-		l.setRecensione(lB.getRecensione());
-		l.setDesc(lB.getDesc());
-		l.setDisponibilita(lB.getDisponibilita());
-		l.setPrezzo(lB.getPrezzo());
-		l.setCopieRim(lB.getCopieRim());
-		
-		
-		
-		  
-		
-		try {
-			if(lD.creaLibrio(l)==true)
+			if(codL!=null && codL!="" && codL.length()<=10)
 			{
-				lB.aggiornaData(l, sqlDate);
-				request.setAttribute("bean", lB);
-				RequestDispatcher view = getServletContext().getRequestDispatcher("/modificaLibro.jsp"); 
-				view.forward(request,response); 
-
-			}
-			else {
-				eB.setE(new LibroInsertException(" Libro non inserito.. Codice isbn non valido"));
+				lB.setTitolo(titolo);
+				lB.setCodIsbn(codL);
+				lB.setNumeroPagine(Integer.parseInt(nrPagL));
+				lB.setEditore(editoreL);
+				lB.setAutore(autoreL);
+				lB.setLingua(linguaL);
+				lB.setCategoria(catS);
+				
+				SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+	
+			    try {
+			         utilDate = format.parse(dataL);
+			        sqlDate = new java.sql.Date(utilDate.getTime());
+			        System.out.println(sqlDate);
+			        lB.setDate(sqlDate);
+			    } catch (ParseException e) {
+			        e.printStackTrace();
+			    }
+				
+			    lB.setRecensione(recensione);
+			    lB.setDesc(desc);
+			    lB.setDisponibilita(0);
+			    if(checkL!=null)
+			    {
+			    	lB.setDisponibilita(1);
+			    }
+			    
+				lB.setPrezzo(Float.parseFloat(prezzoL));
+				lB.setNrCopie(Integer.parseInt(copieL));
+				
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/d");
+				  String date = dataL;
+	
+				  //convert String to LocalDate
+				  LocalDate localDate = LocalDate.parse(date, formatter);
+			
+			
+				  
+			l.setTitolo(lB.getTitolo());
+			l.setNumeroPagine(lB.getNumeroPagine());
+			l.setCodIsbn(lB.getCodIsbn());
+			l.setEditore(lB.getEditore());
+			l.setAutore(lB.getAutore());
+			l.setLingua(lB.getLingua());
+			l.setCategoria(lB.getCategoria());
+			l.setDataPubb(localDate);
+			l.setRecensione(lB.getRecensione());
+			l.setDesc(lB.getDesc());
+			l.setDisponibilita(lB.getDisponibilita());
+			l.setPrezzo(lB.getPrezzo());
+			l.setCopieRim(lB.getCopieRim());
+			
+			
+			
+			  
+			
+			try {
+				if(lD.creaLibrio(l)==true)
+				{
+					lB.aggiornaData(l, sqlDate);
+					request.setAttribute("bean", lB);
+					RequestDispatcher view = getServletContext().getRequestDispatcher("/modificaLibro.jsp"); 
+					view.forward(request,response); 
+	
+				}
+				else {
+					eB.setE(new LibroInsertException(" Libro non inserito.. Codice isbn non valido"));
+					RequestDispatcher view = getServletContext().getRequestDispatcher("/aggiungiLibro.jsp"); 
+					view.forward(request,response); 
+				}
+			} catch (SQLException e) {
+				eB.setE(e);
+				request.setAttribute("bean1", eB);
 				RequestDispatcher view = getServletContext().getRequestDispatcher("/aggiungiLibro.jsp"); 
 				view.forward(request,response); 
 			}
-		} catch (SQLException e) {
-			eB.setE(e);
-			request.setAttribute("bean1", eB);
-			RequestDispatcher view = getServletContext().getRequestDispatcher("/aggiungiLibro.jsp"); 
-			view.forward(request,response); 
+			
+			
+			
+			}
 		}
-		
-		
-		
+		if(buttonA!=null && buttonA.equals("indietro"))
+		{
+			RequestDispatcher view = getServletContext().getRequestDispatcher("/modificaLibro.jsp"); 
+			view.forward(request,response); 
 		}
 	}
 

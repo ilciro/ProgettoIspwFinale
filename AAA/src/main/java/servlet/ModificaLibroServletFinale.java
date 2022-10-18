@@ -69,12 +69,10 @@ public class ModificaLibroServletFinale extends HttpServlet {
 		  lB.setId(idS);
 		  l.setId(Integer.parseInt(lB.getId()));
 		
-			System.out.println("id : "+ id + "idS :"+idS);
 			
 		
 		if(buttonG!=null && buttonG.equals("genera"))
 		{
-			System.out.println("id in genera : "+ id );
 			l.setId(SystemBean.getIstance().getId());
 			
 			try {
@@ -88,9 +86,10 @@ public class ModificaLibroServletFinale extends HttpServlet {
 		}
 		if(buttonM!=null && buttonM.equals("modifica"))
 		{
+			
 			System.out.println("id in modifica" + id);
 			lB.setTitolo(tA);
-			//lB.setNumeroPagine(numP);
+			lB.setNumeroPagine(Integer.parseInt(numP));
 			lB.setCodIsbn(cod);
 			lB.setEditore(ed);
 			lB.setAutore(aut);
@@ -157,6 +156,11 @@ public class ModificaLibroServletFinale extends HttpServlet {
 			
 		}
 		
+		}
+		if(buttonI!=null && buttonI.equals("indietro") )
+		{
+			RequestDispatcher view = getServletContext().getRequestDispatcher("/modificaLibro.jsp"); 
+			view.forward(request,response);
 		}
 	}
 

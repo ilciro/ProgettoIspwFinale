@@ -479,4 +479,20 @@ public class LibroBean implements Raccolta {
 
 	}	
 
+	public int cancella(Libro l) throws SQLException {
+		
+		int row=0;
+		Connection conn=null;
+		PreparedStatement prepQ=null;
+		
+			conn = ConnToDb.generalConnection();
+			
+			prepQ=conn.prepareStatement("delete  FROM ispw.libro where idProd = "+l.getId()+" ;");
+			row=prepQ.executeUpdate();
+		
+	conn.close();
+
+	Log.LOGGER.log(Level.INFO,"Libro cancellato : .{0}",row);
+	return row;
+		}
 }

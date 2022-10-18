@@ -38,18 +38,25 @@ public class ModificaServlet extends HttpServlet {
 		if(boxL!=null && boxL.equals("libri"))
 		{
 			SystemBean.getIstance().setType("libro");
-			request.setAttribute("bean",SystemBean.getIstance());
+			
+			request.setAttribute("bean1",SystemBean.getIstance());
 			RequestDispatcher view = getServletContext().getRequestDispatcher("/modificaLibro.jsp"); 
     		view.forward(request,response);
 		}
 		if(boxG!=null && boxG.equals("giornali"))
 		{
+			SystemBean.getIstance().setType("giornale");
+			request.setAttribute("bean1",SystemBean.getIstance());
 			RequestDispatcher view = getServletContext().getRequestDispatcher("/modificaGiornale.jsp"); 
     		view.forward(request,response);
 		}
 		if(boxR!=null && boxR.equals("riviste"))
 		{
-			RequestDispatcher view = getServletContext().getRequestDispatcher("/modificaLibro.jsp"); 
+			//iniziato
+			SystemBean.getIstance().setType("rivista");
+			
+			request.setAttribute("bean1",SystemBean.getIstance());
+			RequestDispatcher view = getServletContext().getRequestDispatcher("/modificaRivista.jsp"); 
     		view.forward(request,response);
 		}
 		if(indietro!=null && indietro.equals("indietro"))

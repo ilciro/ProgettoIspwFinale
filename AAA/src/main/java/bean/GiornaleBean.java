@@ -4,6 +4,10 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -14,6 +18,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import it.uniroma2.ispw.model.raccolta.Giornale;
 import it.uniroma2.ispw.model.raccolta.Raccolta;
+import it.uniroma2.ispw.utilities.ConnToDb;
 
 public class GiornaleBean implements Raccolta {
 	private String  titolo;
@@ -28,6 +33,9 @@ public class GiornaleBean implements Raccolta {
 	private String url="C:\\libriScaricati";
 	private String[] infoGenerali=new String[5];
 	private List<Giornale> miaListaG;
+	private java.sql.Date date;
+	Statement stmt;
+
 	public String getTitolo() {
 		return titolo;
 	}
@@ -165,5 +173,94 @@ public class GiornaleBean implements Raccolta {
 		this.miaListaG = miaListaG;
 	}
 
+
+	public  int cancella(Giornale g) throws SQLException  {
+
+
+		
+		int row=0;
+		Connection conn=null;
+		PreparedStatement prepQ=null;
+		
+			conn = ConnToDb.generalConnection();
+		
+
+		prepQ=conn.prepareStatement("delete  FROM ispw.giornale where id = '"+g.getId()+"'");
+		row=prepQ.executeUpdate();
+
+	conn.close();
+	return row;
+
+
+
+	}
+	public java.sql.Date getDate() {
+		return date;
+	}
+	public void setDate(java.sql.Date date) {
+		this.date = date;
+	}
+	
+	public void aggiornaData(Giornale g,java.sql.Date dataSql) throws SQLException
+	{
+
+			Connection conn=null;
+			PreparedStatement prepQ=null;
+		
+			conn = ConnToDb.generalConnection();
+			prepQ= conn.prepareStatement("update ispw.giornale set dataPubblicazione= ? where titolo='"+g.getTitolo()+"'");
+			prepQ.setDate(1, dataSql);
+			prepQ.executeUpdate();
+
+		conn.close();
+
+
+	}
+	
+	public  int aggiornaGiornale(Giornale g) throws SQLException  {
+		
+
+		Connection conn=null;
+		PreparedStatement prepQ=null;
+		int row=0;
+
+		
+		conn = ConnToDb.generalConnection();
+
+		stmt=conn.createStatement();
+
+
+		String query=" UPDATE `ispw`.`giornale`"
+				+ "SET"
+				+ "`titolo` =?,"
+				+ "`tipologia` = ?,"
+				+ "`lingua` = ?,"
+				+ "`editore` = ?,"
+				+ "`dataPubblicazione` = ?,"
+				+ "`copiRim` = ?,"
+				+ "`disp` = ?,"
+				+ "`prezzo` = ?"
+				+ "WHERE `id` = "+g.getId()+"";
+		prepQ=conn.prepareStatement(query);
+
+		prepQ.setString(1,g.getTitolo());
+		prepQ.setString(2,g.getTipologia());
+		prepQ.setString(3,g.getLingua());
+		prepQ.setString(4, g.getEditore());
+		prepQ.setString(5,g.getDataPubb().toString());
+		prepQ.setInt(6,g.getCopieRimanenti());
+		prepQ.setInt(7,g.getDisponibilita());
+		prepQ.setFloat(8,g.getPrezzo());
+
+
+		row=prepQ.executeUpdate();
+
+
+
+	conn.close();
+	return row;
+
+
+}	
 
 }

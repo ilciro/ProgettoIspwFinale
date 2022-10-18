@@ -5,34 +5,34 @@
 <html lang=en-it>
 <head>
 <meta charset="ISO-8859-1">
-<title>gestione libro page</title>
+<title>gestione giornale page</title>
 </head>
-<link rel="stylesheet" href="css//modificaLibro.css">
+<link rel="stylesheet" href="css//modificaGiornale.css">
 
 <body>
 
-<h1> Possibile modificare un singolo libro</h1>
+<h1> Possibile modificare un singolo giornale</h1>
 
-<form action="ModificaLibroServlet" method="post">
+<form action="ModificaGiornaleServlet" method="post">
 <table>
 <caption>
-elenco libri
+elenco giornali
 </caption>
 <tr>
 <th scope="col">
 titolo
 </th>
 <th>
-codice isbn
+tipologia
 </th>
 <th>
 editore
 </th>
 <th>
-autore
+data pubblicazione
 </th>
 <th>
-categoria
+disponibilita
 </th>
 <th>
 prezzo
@@ -41,16 +41,16 @@ prezzo
 id prodotto
 </th>
 </tr>
-<c:forEach items="#{bean.miaLista}" var="lista">
+<c:forEach items="#{bean.miaListaG }" var="lista">
 
 <tr>
 
 
 <td>${ lista.getTitolo() }</td>
-<td>${ lista.getCodIsbn() }</td>
+<td>${ lista.getTipologia() }</td>
 <td>${ lista.getEditore() }</td>
-<td>${ lista.getAutore() }</td>
-<td>${ lista.getCategoria()}</td>
+<td>${ lista.getDataPubb() }</td>
+<td>${ lista.getDisponibilita()}</td>
 <td>${ lista.getPrezzo() }</td>
 <td>${ lista.getId()}</td>
 
@@ -78,7 +78,7 @@ id prodotto
 
 
 <br>
-<form action="ModificaLibroServlet" method="post" >
+<form action="ModificaGiornaleServlet" method="post" >
 <table class="modifica" >
 <caption>
 </caption>

@@ -11,26 +11,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bean.ExceptionBean;
-import bean.LibroBean;
+import bean.GiornaleBean;
 import bean.SystemBean;
-import it.uniroma2.ispw.database.LibroDao;
-import it.uniroma2.ispw.model.raccolta.Libro;
+import it.uniroma2.ispw.database.GiornaleDao;
+import it.uniroma2.ispw.model.raccolta.Giornale;
 
 /**
- * Servlet implementation class ModificaLibroServlet
+ * Servlet implementation class ModificaGiornaleServlet
  */
-@WebServlet("/ModificaLibroServlet")
-public class ModificaLibroServlet extends HttpServlet {
+@WebServlet("/ModificaGiornaleServlet")
+public class ModificaGiornaleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private LibroBean lB=new LibroBean();
-	private LibroDao lD=new LibroDao();
+	private GiornaleBean gB=new GiornaleBean();
+	private GiornaleDao gD=new GiornaleDao();
 	private ExceptionBean eB=new ExceptionBean();
-	private Libro l=new Libro();
+	private Giornale g=new Giornale();
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ModificaLibroServlet() {
+    public ModificaGiornaleServlet() {
         super();
     }
 
@@ -55,9 +55,9 @@ public class ModificaLibroServlet extends HttpServlet {
 			if(genera!=null && genera.equals("genera lista"))
 			{
 				
-					lB.setMiaLista(lD.getLibriSingoloList());
-					request.setAttribute("bean", lB);
-					RequestDispatcher view = getServletContext().getRequestDispatcher("/modificaLibro.jsp"); 
+					gB.setMiaListaG(gD.getGiornaliList());
+					request.setAttribute("bean", gB);
+					RequestDispatcher view = getServletContext().getRequestDispatcher("/modificaGiornale.jsp"); 
 					view.forward(request,response);
 				
 			}
@@ -69,7 +69,7 @@ public class ModificaLibroServlet extends HttpServlet {
 			if(buttonA!=null && buttonA.equals("aggiungi"))
 			{
 				
-				RequestDispatcher view = getServletContext().getRequestDispatcher("/aggiungiLibro.jsp"); 
+				RequestDispatcher view = getServletContext().getRequestDispatcher("/aggiungiGiornale.jsp"); 
 				view.forward(request,response);
 			}
 			if(buttonM!=null && buttonM.equals("modifica"))
@@ -80,32 +80,32 @@ public class ModificaLibroServlet extends HttpServlet {
 					eB.setE(new NullPointerException("valore nullo o vuoto"));
 					
 					request.setAttribute("bean1",eB);
-					request.setAttribute("bean",lB);
+					request.setAttribute("bean",gB);
 					
 
-					RequestDispatcher view = getServletContext().getRequestDispatcher("/modificaLibro.jsp"); 
+					RequestDispatcher view = getServletContext().getRequestDispatcher("/modificaGiornale.jsp"); 
 					view.forward(request,response);
 				}
 				else {
 					
 					
 					SystemBean.getIstance().setId(Integer.parseInt(id));
-					l.setId(SystemBean.getIstance().getId());
-					lB.setMiaLista(lD.getLibriSingoloByIdLista(l));
-					request.setAttribute("bean",lB);
+					g.setId(SystemBean.getIstance().getId());
+					gB.setMiaListaG(gD.getGiornaliListSingolo(g));
+					request.setAttribute("bean",gB);
 					request.setAttribute("bean2",SystemBean.getIstance());
-					RequestDispatcher view = getServletContext().getRequestDispatcher("/modificaLibroFinale.jsp"); 
+					RequestDispatcher view = getServletContext().getRequestDispatcher("/modificaGiornaleFinale.jsp"); 
 					view.forward(request,response);
 				}
 			}
 			if(buttonC!=null && buttonC.equals("cancella"))
 			{
-				lB.setId(idCanc);
-				l.setId(Integer.parseInt(lB.getId()));
-				if(lB.cancella(l)==1)
+				gB.setId(Integer.parseInt(idCanc));
+				g.setId(gB.getId());
+				if(gB.cancella(g)==1)
 				{
 
-					RequestDispatcher view = getServletContext().getRequestDispatcher("/modificaLibro.jsp"); 
+					RequestDispatcher view = getServletContext().getRequestDispatcher("/modificaGiornale.jsp"); 
 					view.forward(request,response);
 				}
 				else
@@ -113,9 +113,9 @@ public class ModificaLibroServlet extends HttpServlet {
 					eB.setE(new SQLException("delete fallita"));
 					
 					request.setAttribute("bean1",eB);
-					request.setAttribute("bean",lB);					
+					request.setAttribute("bean",gB);					
 
-					RequestDispatcher view = getServletContext().getRequestDispatcher("/modificaLibro.jsp"); 
+					RequestDispatcher view = getServletContext().getRequestDispatcher("/modificaGiornale.jsp"); 
 					view.forward(request,response);
 				}
 			}
