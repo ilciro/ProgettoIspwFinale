@@ -35,7 +35,7 @@
          <children>
             <ImageView fx:id="image" fitHeight="108.0" fitWidth="253.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
                <image>
-                  <Image url="@../../../../../img/register-button-png-26.png" />
+                  <Image url="@../../../../../webapp/immagini/register-button-png-26.png" />
                </image>
             </ImageView>
             <Label fx:id="nomeL" prefHeight="87.0" prefWidth="134.0" text="Inserire nome" GridPane.rowIndex="2" />

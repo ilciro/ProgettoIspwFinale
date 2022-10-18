@@ -19,7 +19,7 @@
       <Label fx:id="header" layoutX="27.0" layoutY="38.0" prefHeight="17.0" prefWidth="545.0" text="Registrazione effettuata con successo.. Scegliere cosa fare !!!" textFill="#0303f5" />
       <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" layoutX="316.0" layoutY="142.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../Desktop/Nuova%20cartella/registraz_ok.png" />
+            <Image url="@../../../../../webapp/immagini/registraz_ok.png" />
          </image>
       </ImageView>
    </children>
