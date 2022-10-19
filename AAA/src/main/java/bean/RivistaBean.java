@@ -5,17 +5,24 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.logging.Level;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import it.uniroma2.ispw.model.Log;
 import it.uniroma2.ispw.model.raccolta.CategorieRivista;
 import it.uniroma2.ispw.model.raccolta.Raccolta;
 import it.uniroma2.ispw.model.raccolta.Rivista;
+import it.uniroma2.ispw.utilities.ConnToDb;
 
 public class RivistaBean implements Raccolta{
 	private String titolo;
@@ -32,6 +39,11 @@ public class RivistaBean implements Raccolta{
 	private String url="C:\\libriScaricati";
 	private String [] infoGenerali=new String[5];
 	private List<Rivista> listaR;
+	private String listaCategorie;
+	private java.sql.Date date;
+	Statement stmt;
+
+
 
 	public RivistaBean(String [] info,String descrizione, LocalDate dataPubb2, int disp, float prezzo, int copieRim,int id) {
 		this.setInfoGenerali(info);
@@ -72,7 +84,7 @@ public class RivistaBean implements Raccolta{
 	public LocalDate getDataPubb() {
 		return this.dataPubb;
 	}
-	public int getDisponibilita() {
+	public int getDisp() {
 		return this.disponibilita;
 	}
 	public float getPrezzo() {
@@ -166,7 +178,7 @@ public class RivistaBean implements Raccolta{
 	public void setDataPubb(LocalDate dataPubb) {
 		this.dataPubb = dataPubb;
 	}
-	public void setDisponibilita(int disp) {
+	public void setDisp(int disp) {
 		this.disponibilita = disp;
 	}
 	public void setPrezzo(float prezzo) {
@@ -239,5 +251,92 @@ public class RivistaBean implements Raccolta{
 	public void setListaR(List<Rivista> listaR) {
 		this.listaR = listaR;
 	}
+public int cancella(Rivista r) throws SQLException {
+		
+		int row=0;
+		Connection conn=null;
+		PreparedStatement prepQ=null;
+		
+			conn = ConnToDb.generalConnection();
+			
+			prepQ=conn.prepareStatement("delete  FROM ispw.rivista where id = "+r.getId()+" ;");
+			row=prepQ.executeUpdate();
+		
+	conn.close();
+
+	Log.LOGGER.log(Level.INFO,"Libro cancellato : .{0}",row);
+	return row;
+		}
+	public String getListaCategorie() {
+		return listaCategorie;
+	}
+	public void setListaCategorie(String listaCategorie) {
+		this.listaCategorie = listaCategorie;
+	}
+	public java.sql.Date getDate() {
+		return date;
+	}
+	public void setDate(java.sql.Date date) {
+		this.date = date;
+	}
+	public void aggiornaData(Rivista r,java.sql.Date dataSql) throws SQLException
+	{
+
+			Connection conn=null;
+			PreparedStatement prepQ=null;
+		
+			conn = ConnToDb.generalConnection();
+			prepQ= conn.prepareStatement("update ispw.rivista set dataPubblicazione= ? where id='"+r.getId()+"'");
+			prepQ.setDate(1, dataSql);
+			prepQ.executeUpdate();
+
+		conn.close();
+
+
+	}
+	public int aggiornaRivista(Rivista r) throws SQLException {
+		 int rowAffected=0;
+
+		 Connection conn=null;
+		
+			conn = ConnToDb.generalConnection();
+			stmt=conn.createStatement();
+			PreparedStatement prepQ=null;
+			
+
+			String query="UPDATE `ispw`.`rivista`"
+		 			+ "SET"
+		 			+ "`titolo` = ?,"
+		 			+ "`tipologia` =?,"
+		 			+ "`autore` = ?,"
+		 			+ "`lingua` = ?,"
+		 			+ "`editore` = ?,"
+		 			+ "`Descrizione` =?,"
+		 			+ "`dataPubblicazione` =?,"
+		 			+ "`disp` = ?,"
+		 			+ "`prezzo` = ?,"
+		 			+ "`copieRimanenti` =? WHERE `id` = "+r.getId()+";";
+		 		
+		 	prepQ=conn.prepareStatement(query);
+			
+			prepQ.setString(1,r.getTitolo());
+			prepQ.setString(2,r.getTipologia());
+			prepQ.setString(3,r.getAutore());
+			prepQ.setString(4,r.getLingua());
+			prepQ.setString(5,r.getEditore());
+			prepQ.setString(6,r.getDescrizione());
+			prepQ.setString(7,r.getDataPubb().toString());
+			prepQ.setInt(8,r.getDisp());
+			prepQ.setFloat(9,r.getPrezzo());
+			prepQ.setInt(10,r.getCopieRim());
+		
+
+			rowAffected = prepQ.executeUpdate();
+			prepQ.close();
+			
+           Log.LOGGER.log(Level.INFO,"row affected .{0}",rowAffected);
+		return rowAffected;
+
+	 }	
 
 }

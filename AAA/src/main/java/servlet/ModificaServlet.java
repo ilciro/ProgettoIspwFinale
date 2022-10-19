@@ -53,8 +53,7 @@ public class ModificaServlet extends HttpServlet {
 		if(boxR!=null && boxR.equals("riviste"))
 		{
 			//iniziato
-			SystemBean.getIstance().setType("rivista");
-			
+			SystemBean.getIstance().setType("rivista");			
 			request.setAttribute("bean1",SystemBean.getIstance());
 			RequestDispatcher view = getServletContext().getRequestDispatcher("/modificaRivista.jsp"); 
     		view.forward(request,response);

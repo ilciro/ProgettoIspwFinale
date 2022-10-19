@@ -4,8 +4,8 @@
 <html lang=en-it>
 <head>
 <meta charset="ISO-8859-1">
-<title>pagine per modificare libro</title>
-<link href="css//modifL.css" rel="stylesheet" type="text/css">
+<title>pagine per modificare rivista</title>
+<link href="css//modifR.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <h1>inserire i campi da modificare</h1>
@@ -13,46 +13,34 @@
 
 
 <table>
-<caption>Riepilogo libro</caption>
+<caption>Riepilogo rivista</caption>
 <tr>
 <th>
-Titolo
+titolo
 </th>
 <th>
-Numero pagine
+tipo
 </th>
 <th>
-Codice Isbn
+autore
 </th>
 <th>
-Editore
+lingua
 </th>
 <th>
-Autore
+editore
 </th>
 <th>
-Lingua
-</th>
-<th>
-Categoria
+descrizione
 </th>
 <th>
 DataPubblicazione
 </th>
 <th>
-Recensione
-</th>
-<th>
-CopieVendute
-</th>
-<th>
-Descrizione
-</th>
-<th>
 Disponibilita
 </th>
 <th>
-Prezzo
+prezzo
 </th>
 <th>
 Copie Rimanenti
@@ -62,24 +50,20 @@ idProdotto
 </th>
 </tr>
 
-<c:forEach items="#{bean.miaLista}" var="lista">
+<c:forEach items="#{bean.listaR}" var="lista">
 
 <tr>
 
 <td>${ lista.getTitolo() }</td>
-<td>${ lista.getNumeroPagine() }</td>
-<td>${ lista.getCodIsbn() }</td>
-<td>${ lista.getEditore() }</td>
+<td>${ lista.getTipologia() }</td>
 <td>${ lista.getAutore() }</td>
 <td>${ lista.getLingua() }</td>
-<td>${ lista.getCategoria()}</td>
+<td>${ lista.getEditore() }</td>
+<td>${ lista.getDescrizione() }</td>
 <td>${ lista.getDataPubb()}</td>
-<td>${ lista.getRecensione() }</td>
-<td>${ lista.getNrCopie() }</td>
-<td>${ lista.getDesc() }</td>
-<td>${ lista.getDisponibilita() }</td>
+<td>${ lista.getDisp()}</td>
 <td>${ lista.getPrezzo() }</td>
-<td>${ lista.getNrCopie() }</td>
+<td>${ lista.getCopieRim() }</td>
 <td>${ lista.getId()}</td>
 </tr>
 </c:forEach>
@@ -87,14 +71,14 @@ idProdotto
 
 <br>
 <br>
-<form action="ModificaLibroServletFinale" method="post">
+<form action="ModificaRivistaServletFinale" method="post">
 <table>
 <caption>
 </caption>
 <tr>
 <th scope="col"></th>
 </tr>
-<c:forEach items="#{bean.miaLista}" var="lista">
+<c:forEach items="#{bean.listaR}" var="lista">
 
 <tr>
 <td>
@@ -107,29 +91,11 @@ titolo
 </tr>
 <tr>
 <td>
-num pagine
+tipo
 </td>
 <td>
-<label for="numA"></label>
-<input type="text" id="numA" name="numA" value="${lista.getNumeroPagine() }">
-</td>
-</tr>
-<tr>
-<td>
-codice isbn
-</td>
-<td>
-<label for="codA"></label>
-<input type="text" id="codA" name="codA" value="${lista.getCodIsbn()}">
-</td>
-</tr>
-<tr>
-<td>
-editore
-</td>
-<td>
-<label for="edA"></label>
-<input type="text" id="edA" name="edA" value="${lista.getEditore() }">
+<label for="tipoA"></label>
+<input type="text" id="tipoA" name="tipoA" value="${lista.getTipologia() }">
 </td>
 </tr>
 <tr>
@@ -138,7 +104,7 @@ autore
 </td>
 <td>
 <label for="autA"></label>
-<input type="text" id="autA" name="autA" value="${lista.getAutore() }">
+<input type="text" id="autA" name="autA" value="${lista.getAutore()}">
 </td>
 </tr>
 <tr>
@@ -152,11 +118,20 @@ lingua
 </tr>
 <tr>
 <td>
-categoria
+editore
 </td>
 <td>
-<label for="catA"></label>
-<input type="text" id="catA" name="catA" value="${lista.getCategoria() }">
+<label for="edA"></label>
+<input type="text" id="edA" name="edA" value="${lista.getEditore() }">
+</td>
+</tr>
+<tr>
+<td>
+descrizione
+</td>
+<td>
+<label for="descA"></label>
+<input type="text" id="descA" name="descA" value="${lista.getDescrizione() }">
 </td>
 </tr>
 <tr>
@@ -170,29 +145,11 @@ data pubblicazione (yyyy/mm/dd) USARE IL '/'
 </tr>
 <tr>
 <td>
-recensione
-</td>
-<td>
-<label for="recA"></label>
-<input type="text" id="recA" name="recA" value="${lista.getRecensione() }">
-</td>
-</tr>
-<tr>
-<td>
-descrizione
-</td>
-<td>
-<label for="descA"></label>
-<input type="text" id="descA" name="descA" value="${lista.getDesc()}">
-</td>
-</tr>
-<tr>
-<td>
 disp (0->no 1->si)
 </td>
 <td>
 <label for="dispA"></label>
-<input type="text" id="dispA" name="dispA" value="${lista.getDisponibilita() }">
+<input type="text" id="dispA" name="dispA" value="${lista.getDisp() }">
 </td>
 </tr>
 <tr>
@@ -210,7 +167,7 @@ copie rimanenti
 </td>
 <td>
 <label for="copA"></label>
-<input type="text" id="copA" name="copA" value="${lista.getNrCopie() }">
+<input type="text" id="copA" name="copA" value="${lista.getCopieRim() }">
 </td>
 </tr>
 

@@ -169,7 +169,7 @@ public class AcquistaServlet extends HttpServlet {
 				
 				rB.setTitolo(titolo);
 				rB.setTipologia(tipologia);
-				rB.setDisponibilita(disp);
+				rB.setDisp(disp);
 				
 				SystemBean.getIstance().setId(Integer.parseInt(id));
 				
