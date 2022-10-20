@@ -45,14 +45,16 @@ public class ReportServlet extends HttpServlet {
 		}
 		else if(buttonRac!=null && buttonRac.equals("genera raccolta"))
 		{
-			//fare questo .. iniziato
+			
 
 			RequestDispatcher view = getServletContext().getRequestDispatcher("/raccolta.jsp"); 
 			view.forward(request,response);
 		}
 		else if(buttonU!=null && buttonU.equals("gestione utenti"))
 		{
-			System.out.println("button User pressed");
+			//fare questo .. iniziato
+			RequestDispatcher view = getServletContext().getRequestDispatcher("/utenti.jsp"); 
+			view.forward(request,response);
 		}
 		if(buttonLog!=null && buttonLog.equals("logout"))
 		{
