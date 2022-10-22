@@ -15,6 +15,7 @@ import bean.SystemBean;
 import bean.UserBean;
 import bean.UserBeanNoS;
 import it.uniroma2.ispw.model.TempUser;
+import it.uniroma2.ispw.model.User;
 
 /**
  * Servlet implementation class UsersServlet
@@ -45,9 +46,8 @@ public class UsersServlet extends HttpServlet {
 		String aggiungi=request.getParameter("aggiungiB");
 		String modif=request.getParameter("modifB");
 		String cancella=request.getParameter("cancB");
-		String indietro=request.getParameter("indietroB");
-		String id=request.getParameter("idU");
-		UserBean.getInstance().setId(Integer.parseInt(id));
+		String indietro=request.getParameter("indB");
+		
 		
 		try {
 			if(genera!=null && genera.equals("genera lista")) 
@@ -77,7 +77,6 @@ public class UsersServlet extends HttpServlet {
 			{
 					
 				
-				request.setAttribute("bean",UserBean.getInstance());
 				RequestDispatcher view = getServletContext().getRequestDispatcher("/inserisciUtente.jsp"); 
 				view.forward(request,response);
 				
@@ -85,22 +84,29 @@ public class UsersServlet extends HttpServlet {
 			
 			if(modif!=null &&modif.equals("modifica"))
 			{
+				String id=request.getParameter("idU");
+				UserBean.getInstance().setId(Integer.parseInt(id));
+				System.out.println("id "+id);
 				
 				if(id==null)
 				{
 					eB.setE(new NumberFormatException(" id nullo "));
 					request.setAttribute("bean1",eB);
+					request.setAttribute("bean2", SystemBean.getIstance());
 					RequestDispatcher view = getServletContext().getRequestDispatcher("/utenti.jsp"); 
 					view.forward(request,response);
 				}else {
 				request.setAttribute("bean",TempUser.getInstance());
-				RequestDispatcher view = getServletContext().getRequestDispatcher("/modificaUser.jsp"); 
+				request.setAttribute("bean2", us);
+				RequestDispatcher view = getServletContext().getRequestDispatcher("/modificaUtente.jsp"); 
 				view.forward(request,response);
 				}
 			}
 			if(cancella!=null && cancella.equals("cancella"))
 			{
-				SystemBean.getIstance().setId(Integer.parseInt(id));
+				String id=request.getParameter("idU");
+				UserBean.getInstance().setId(Integer.parseInt(id));
+				User.getInstance().setId(Integer.parseInt(id));
 
 				if(id==null)
 				{
@@ -110,16 +116,24 @@ public class UsersServlet extends HttpServlet {
 					view.forward(request,response);
 				}
 				else {
-					request.setAttribute("bean",UserBean.getInstance());
+					//request.setAttribute("bean",UserBean.getInstance());
+					
+
+					
+					if(UserBean.getInstance().deleteUser(User.getInstance())==true)
+					{
 					RequestDispatcher view = getServletContext().getRequestDispatcher("/utenti.jsp"); 
 					view.forward(request,response);
-				}
+					}
+					
+			}
+			
 			}
 			if(indietro!=null && indietro.equals("indietro"))
 			{
 				SystemBean.getIstance().setId(0);
 				request.setAttribute("bean",us);
-				RequestDispatcher view = getServletContext().getRequestDispatcher("/utenti.jsp"); 
+				RequestDispatcher view = getServletContext().getRequestDispatcher("/admin.jsp"); 
 				view.forward(request,response);
 			}
 		
@@ -131,5 +145,6 @@ public class UsersServlet extends HttpServlet {
 			view.forward(request,response);e.printStackTrace();
 	}
 	}
+	
 
 }

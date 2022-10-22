@@ -52,7 +52,7 @@ public class ReportServlet extends HttpServlet {
 		}
 		else if(buttonU!=null && buttonU.equals("gestione utenti"))
 		{
-			//fare questo .. iniziato
+			
 			RequestDispatcher view = getServletContext().getRequestDispatcher("/utenti.jsp"); 
 			view.forward(request,response);
 		}

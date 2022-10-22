@@ -110,9 +110,6 @@ public class UserBeanNoS {
 			st=conn.createStatement();
 			rs = st.executeQuery("SELECT * FROM ispw.users");
 
-
-			//fare tipo matchPaama e factory(noo)
-
 			while(rs.next())
 			{
 				UserBeanNoS uS=new UserBeanNoS();
@@ -136,6 +133,43 @@ public class UserBeanNoS {
 		return utentiL;
 	}
 
+	public List<UserBeanNoS>getListaUtente() throws IOException, SQLException  {
+
+		Connection conn=null;
+		Statement st=null;
+		ResultSet rs=null;
+		List<UserBeanNoS>utentiL=new ArrayList<>();
+		conn= ConnToDb.generalConnection();
+	
+		
+		
+
+			st=conn.createStatement();
+			rs = st.executeQuery("SELECT * FROM ispw.users where idUser='"+UserBean.getInstance().getId()+"'");
+
+			while(rs.next())
+			{
+				UserBeanNoS uS=new UserBeanNoS();
+				uS.setId(rs.getInt(1));
+				uS.setR(rs.getString(2));
+				uS.setNome(rs.getString(3));
+				uS.setCognome(rs.getString(4));
+				uS.setEmail(rs.getString(5));
+				uS.setDescrizione("utente generico");
+				uS.setDataDiNascita(rs.getDate(8).toLocalDate());
+				
+				utentiL.add(uS);
+
+			
+			}
+		
+		
+			
+				conn.close();
+				
+			         
+		return utentiL;
+	}
 
 
 }
